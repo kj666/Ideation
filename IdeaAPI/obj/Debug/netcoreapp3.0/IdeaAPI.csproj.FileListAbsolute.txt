@@ -7,3 +7,11 @@ C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\staticwebassets\IdeaAPI.StaticWe
 C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.AssemblyInfoInputs.cache
 C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.AssemblyInfo.cs
 C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.RazorTargetAssemblyInfo.cache
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.exe
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.deps.json
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.runtimeconfig.json
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.runtimeconfig.dev.json
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.dll
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.pdb
+C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.dll
+C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.pdb
