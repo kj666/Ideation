@@ -10,8 +10,7 @@ namespace IdeaAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [BsonElement("Name")]
-        public string UserName { get; set; }
+        public string User { get; set; }
 
         public List<string> Keywords { get; set; }
 

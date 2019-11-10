@@ -15,3 +15,10 @@ C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.dll
 C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\IdeaAPI.pdb
 C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.dll
 C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.pdb
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\DnsClient.dll
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\MongoDB.Bson.dll
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\MongoDB.Driver.dll
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\MongoDB.Driver.Core.dll
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\SharpCompress.dll
+C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.csproj.CopyComplete
