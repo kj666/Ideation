@@ -20,5 +20,6 @@ C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\MongoDB.Bson.dll
 C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\MongoDB.Driver.dll
 C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\MongoDB.Driver.Core.dll
 C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\SharpCompress.dll
-C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.csproj.CopyComplete
+C:\dev\Ideation\IdeaAPI\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
+C:\dev\Ideation\IdeaAPI\obj\Debug\netcoreapp3.0\IdeaAPI.MvcApplicationPartsAssemblyInfo.cache
