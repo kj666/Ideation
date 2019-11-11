@@ -24,10 +24,29 @@ namespace IdeaAPI.Controllers
             _ideaService = ideaServie;
         }
 
-        [HttpGet]
-        public ActionResult<List<Research>> Get() => _ideaService.Get();
+        #region Research
 
-        [HttpGet("random")]
+        [HttpGet("research")]
+        public ActionResult<List<Research>> GetResearches() => _ideaService.GetAllResearches();
+
+        [HttpGet("research/user/{username}")]
+        public ActionResult<List<Research>> GetResearchByUserName(string username) => _ideaService.GetResearchByUsername(username);
+
+        /// <summary>
+        /// Add new research to specified username
+        /// </summary>
+        /// <param name="research"></param>
+        /// <returns></returns>
+        [HttpPost("research/user/{username}")]
+        public ActionResult<Research> CreateResearch(Research research, string username) => _ideaService.CreateUserResearch(research, username);
+
+        [HttpGet("research/{researchName}")]
+        public ActionResult<Research> GetResearch(string researchName) => _ideaService.GetResearchByName(researchName);
+
+        #endregion Research
+
+
+        [HttpGet("words/random")]
         public async Task<List<Word>> CallWordAPI()
         {
             using (var client = new HttpClient())
@@ -37,10 +56,24 @@ namespace IdeaAPI.Controllers
             }
         }
 
-        public class Word
-        {
-            public int id { get; set; }
-            public string word { get; set; }
-        }
+
+        #region User
+
+        [HttpGet("user")]
+        public ActionResult<List<User>> GetUsers() => _ideaService.GetAllUsers();
+
+        [HttpPost("user")]
+        public ActionResult<User> CreateUser(User user) => _ideaService.CreateUser(user);
+
+        [HttpGet("user/{username}")]
+        public ActionResult<User> GetUser(string username) => _ideaService.GetUser(username);
+
+        [HttpGet("user/exist/username/{username}")]
+        public Boolean UserUsernameExist(string username) => _ideaService.UserUsernameExist(username);
+
+        [HttpGet("user/exist/email/{email}")]
+        public Boolean UserEmailExist(string email) => _ideaService.UserEmailExist(email);
+
+        #endregion User
     }
 }
