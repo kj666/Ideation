@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="module" src="components/my-element.js"></script>
-    <script src='node_modules/heavy-navbar/dist/heavynavbar.js'></script>  
+    <script type="module" src="components/ui-ideation.js"></script>
+    <script src='node_modules/heavy-navbar/dist/heavynavbar.js'></script> 
+    <style>
+    heavy-navbar {
+            --heavy-navbar-background: #2a3443;
+            --heavy-navbar-color: #ffffff;
+            --heavy-navbar-hover-color: #777a78;
+    }
+    </style>
+    
     <title>IDEATION</title>
 </head>
 <body>
-        <heavy-navbar item-count="4">
-                <a href="#" slot="item-1">Home</a>
-                <a href="#about" slot="item-2">About</a>
-                <a href="#blog" slot="item-3">Blog</a>
-                <a href="#contact" slot="item-4">Contact</a>
-            </heavy-navbar> 
-            <my-element></my-element>    
+    <heavy-navbar item-count="4">
+        <a href="#" slot="item-1">Home</a>
+        <a href="#about" slot="item-2">About</a>
+        <a href="#blog" slot="item-3">Blog</a>
+        <a href="#contact" slot="item-4">Contact</a>
+    </heavy-navbar>
+        <ui-ideation></ui-ideation>
 </body>
 </html>

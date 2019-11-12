@@ -1,12 +1,13 @@
 {
-  "requires": true,
-  "scripts": {
-    "start": "polymer serve"
-  },
-  "dependencies": {
-    "@vaadin/vaadin-text-field": "^2.5.0",
-    "heavy-navbar": "0.0.13",
-    "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2"
-  }
+	"requires": true,
+	"scripts": {
+		"start": "polymer serve"
+	},
+	"dependencies": {
+		"@vaadin/vaadin-button": "^2.2.1",
+		"@vaadin/vaadin-text-field": "^2.5.0",
+		"heavy-navbar": "0.0.13",
+		"lit-element": "^2.2.1",
+		"lit-html": "^1.1.2"
+	}
 }
