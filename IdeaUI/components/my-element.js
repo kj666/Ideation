@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, css, html } from 'lit-element';
 import { HeaderElement } from './header-element';
 import '@vaadin/vaadin-text-field';
 
