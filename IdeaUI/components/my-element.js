@@ -1,4 +1,5 @@
 import { LitElement, html } from 'lit-element';
+import { HeaderElement}  from './header-element';
 import '@vaadin/vaadin-text-field';
 
 class MyElement extends LitElement {
@@ -17,6 +18,7 @@ class MyElement extends LitElement {
 
 	render() {
 		return html`
+		<header-element><header-element>
         <div class="input-layout">
             <vaadin-text-field
                 placeholder="Search"
