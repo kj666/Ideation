@@ -1,5 +1,7 @@
 import { LitElement, css, html } from 'lit-element';
-import { HeaderElement } from './header-element';
+import  './header-element.js';
+import './signup-view.js';
+
 import '@vaadin/vaadin-text-field';
 
 class MyElement extends LitElement {
@@ -36,7 +38,9 @@ class MyElement extends LitElement {
 	}
 	render() {
 		return html`
-		<header-element><header-element>
+			<signup-view></signup-view>
+		
+
         <div class="input-layout">
             <vaadin-text-field
                 placeholder="Search"

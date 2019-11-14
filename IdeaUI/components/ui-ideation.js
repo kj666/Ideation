@@ -26,6 +26,7 @@ class IdeationUI extends LitElement {
 		`;
 	}
 
+	
 	render() {
 		return html`
 
