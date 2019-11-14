@@ -1,6 +1,6 @@
 import { LitElement,css, html } from 'lit-element';
 
-class HeaderElement extends LitElement{
+export class HeaderElement extends LitElement{
     
     constructor(){
         super();
