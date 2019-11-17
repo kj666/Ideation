@@ -68,6 +68,7 @@ export class MainUI extends LitElement {
 
 	updateTask(e) {
 		this.task = e.target.value;
+		e.target.value = '';
 	}
 
 	addItem() {
