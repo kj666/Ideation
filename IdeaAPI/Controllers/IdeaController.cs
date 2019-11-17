@@ -51,7 +51,7 @@ namespace IdeaAPI.Controllers
         {
             using (var client = new HttpClient())
             {
-                var content = await client.GetStringAsync("https://87938f90-8e2c-4c73-a8c8-b6ca7478ad85.mock.pstmn.io/workAPI");
+                var content = await client.GetStringAsync("https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=10&api_key=hcjtmdkyfyp7wb7znn47m2o6ezs8d1e82hvf7xkv87hf7bb4h");
                 return JsonConvert.DeserializeObject<List<Word>>(content);
             }
         }
