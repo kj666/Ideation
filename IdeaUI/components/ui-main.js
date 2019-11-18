@@ -6,13 +6,18 @@ export class MainUI extends LitElement {
 	static get properties() {
 		return {
 			linksGenerated: { type: Array },
-			task: { type: String }
+			task: { type: String },
+			savedLinks: { type: Array },
+			saveLink: { type: String }
 		};
 	}
+
 	constructor() {
 		super();
 		this.linksGenerated = [];
 		this.task = '';
+		this.savedLinks = [];
+		this.saveLink = '';
 	}
 
 	render() {
@@ -30,32 +35,65 @@ export class MainUI extends LitElement {
 			  <header-element></header-element>
 		  </div>
 		  	 
-			<div class="container" style="padding-top: 50px; background: yellow">
-				<div class="row">
-				<div class="col-sm-6">
-					<div class="form-group">
-						<div class="input-layout" @keyup="${this.shortcutListener}">
-							<input class="form-control" type="text" placeholder="Search" aria-label="Search" value="${this
-								.task}" @change="${this.updateTask}" >
-							<div class="cardList" style="padding-top: 20px">
+			<div class="container" style="padding-top: 50px;">
+				<div class="row" style="width: 50%;">
+					<div class="col">
+						<div class="form-group">
+							<div class="input-layout" @keyup="${this.shortcutListener}">
+								<input class="form-control" type="text" placeholder="Search" aria-label="Search" value="${this
+									.task}" @change="${this.updateTask}" >
+							</div>	
+						</div>
+					</div>
+				</div>	
+
+				<div class="row" style="width: 50%">
+				${this.linksGenerated.map(
+					(i) => html`
+					<div class="col-sm-3">
+						<div class="card" style="width:8rem;">
+						${i.task}
+						</div>
+					</div>
+				`
+				)}
+				</div>		
+
+					
+				<div class="row" style="width: 50%; padding-top: 50px;">
+					<div class="col text-center">
+						<button class="btn btn-secondary btn-block bg-dark" type="submit">Search</button>
+					</div>
+				</div>
+				
+						
+				<div class="row" style="padding-top: 50px;">
+					<div class="col-sm-6 text-center">
+					<h1>Search Results</h1>
+						<div class="cardList" style="padding-top: 20px">
 								<div class="card">
 									<ul class="list-group list-group-flush">${this.linksGenerated.map(
 										(i) =>
 											html`<li class="list-group-item">
-												<i class="fas fa-arrow-alt-circle-left" style="font-size: 30px;"></i>${i.task} <i class="fas fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+												<i class="fas fa-arrow-alt-circle-left" style="font-size: 30px;"></i>${i.task}<i class="fas fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
 												</li>`
 									)}</ul>
 								</div>
-							</div>
-						</div>	
+						</div>
+					</div>
+					<div class="col-sm-6 text-center">
+						<h1>Saved Ideas</h1>
+						<div class="cardList" style="padding-top: 20px">
+								<div class="card">
+									<ul class="list-group list-group-flush">${this.linksGenerated.map(
+										(i) => html`<li class="list-group-item">${i.task} </li>`
+									)}</ul>
+								</div>
+						</div>
+					</div>	
 					</div>
 				</div>
-				<div class="col-sm">col-sm</div>
-					<div class="col-sm"><h1>SAVED IDEAS</h1>
-						<p>This is where saved items will come</p>
-					</div>
-				</div>
-			</div>
+			</div>	
         `;
 	}
 
@@ -83,6 +121,8 @@ export class MainUI extends LitElement {
 			this.task = '';
 		}
 	}
+
+	addSavedItems() {}
 }
 
 customElements.define('ui-main', MainUI);
