@@ -24,23 +24,56 @@ namespace IdeaAPI.Controllers
             _ideaService = ideaServie;
         }
 
-        [HttpGet]
-        public ActionResult<List<Research>> Get() => _ideaService.Get();
+        #region Research
 
-        [HttpGet("random")]
+        [HttpGet("research")]
+        public ActionResult<List<Research>> GetResearches() => _ideaService.GetAllResearches();
+
+        [HttpGet("research/user/{username}")]
+        public ActionResult<List<Research>> GetResearchByUserName(string username) => _ideaService.GetResearchByUsername(username);
+
+        /// <summary>
+        /// Add new research to specified username
+        /// </summary>
+        /// <param name="research"></param>
+        /// <returns></returns>
+        [HttpPost("research/user/{username}")]
+        public ActionResult<Research> CreateResearch(Research research, string username) => _ideaService.CreateUserResearch(research, username);
+
+        [HttpGet("research/{researchName}")]
+        public ActionResult<Research> GetResearch(string researchName) => _ideaService.GetResearchByName(researchName);
+
+        #endregion Research
+
+
+        [HttpGet("words/random")]
         public async Task<List<Word>> CallWordAPI()
         {
             using (var client = new HttpClient())
             {
-                var content = await client.GetStringAsync("https://87938f90-8e2c-4c73-a8c8-b6ca7478ad85.mock.pstmn.io/workAPI");
+                var content = await client.GetStringAsync("https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=10&api_key=hcjtmdkyfyp7wb7znn47m2o6ezs8d1e82hvf7xkv87hf7bb4h");
                 return JsonConvert.DeserializeObject<List<Word>>(content);
             }
         }
 
-        public class Word
-        {
-            public int id { get; set; }
-            public string word { get; set; }
-        }
+
+        #region User
+
+        [HttpGet("user")]
+        public ActionResult<List<User>> GetUsers() => _ideaService.GetAllUsers();
+
+        [HttpPost("user")]
+        public ActionResult<User> CreateUser(User user) => _ideaService.CreateUser(user);
+
+        [HttpGet("user/{username}")]
+        public ActionResult<User> GetUser(string username) => _ideaService.GetUser(username);
+
+        [HttpGet("user/exist/username/{username}")]
+        public Boolean UserUsernameExist(string username) => _ideaService.UserUsernameExist(username);
+
+        [HttpGet("user/exist/email/{email}")]
+        public Boolean UserEmailExist(string email) => _ideaService.UserEmailExist(email);
+
+        #endregion User
     }
 }
