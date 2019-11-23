@@ -12,3 +12,7 @@ IdeaAPI/obj/Debug/netcoreapp3.0/
 IdeaAPI/.vs/IdeaAPI/DesignTimeBuild/
 
 IdeaAPI/obj/
+
+*.DS_Store
+*.pyc
+*.idea/
