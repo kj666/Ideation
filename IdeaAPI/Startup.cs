@@ -35,6 +35,14 @@ namespace IdeaAPI
             services.AddSingleton<IdeaService>();
 
             services.AddControllers();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod()
+               .AllowAnyHeader());
+            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +52,8 @@ namespace IdeaAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowOrigin");
 
             app.UseHttpsRedirection();
 
@@ -55,6 +65,7 @@ namespace IdeaAPI
             {
                 endpoints.MapControllers();
             });
+          
         }
     }
 }

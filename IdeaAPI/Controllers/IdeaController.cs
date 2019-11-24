@@ -7,12 +7,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IdeaAPI.Models;
 using IdeaAPI.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace IdeaAPI.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [ApiController]
     [Route("[controller]")]
     public class IdeaController : ControllerBase
@@ -25,7 +27,7 @@ namespace IdeaAPI.Controllers
         }
 
         #region Research
-
+        [EnableCors("AllowOrigin")]
         [HttpGet("research")]
         public ActionResult<List<Research>> GetResearches() => _ideaService.GetAllResearches();
 
@@ -45,7 +47,7 @@ namespace IdeaAPI.Controllers
 
         #endregion Research
 
-
+        [EnableCors("AllowOrigin")]
         [HttpGet("words/random")]
         public async Task<List<Word>> CallWordAPI()
         {
