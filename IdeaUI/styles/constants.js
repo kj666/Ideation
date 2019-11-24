@@ -1,4 +1,6 @@
 //Pages
+
+const RESEARCH_API_URL = 'https://localhost:44315/idea/research';
 const HOME = 'home';
 const LOGIN_VIEW = 'login';
 const SIGNUP_VIEW = 'signup';

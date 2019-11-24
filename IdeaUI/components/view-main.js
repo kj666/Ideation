@@ -1,8 +1,10 @@
 import { LitElement, html } from 'lit-element';
-import { HeaderElement } from './header-element';
 import { SavedUI } from './ui-saved';
+import { ServiceElement } from '../services/data-service';
+import { PageViewElement } from './page-view-element.js';
 
-export class MainUI extends LitElement {
+export class ViewMain extends PageViewElement {
+
 	static get properties() {
 		return {
 			searchWords: { type: Array },
@@ -31,10 +33,6 @@ export class MainUI extends LitElement {
 		  
 		
 		<!-- Include Header -->
-		  <div>
-			  <header-element></header-element>
-		  </div>
-		  	 
 			<div class="container" style="padding-top: 50px;">
 				<div class="row" style="width: 50%;">
 					<div class="col">
@@ -123,6 +121,10 @@ export class MainUI extends LitElement {
 	}
 
 	addSavedItems() {}
+
+	getResearch(){
+
+	}
 }
 
-customElements.define('ui-main', MainUI);
+customElements.define('view-main', ViewMain);
