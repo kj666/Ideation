@@ -1,16 +1,32 @@
 from aiohttp import web
-import googleapiclient
+import async_custom_search
+
+app = web.Application()
+routes = web.RouteTableDef()
 
 
-async def handle(request):
+@routes.get('/')
+async def get_search_results(request):
     name = request.match_info.get('name', "Anonymous")
     text = "Hello, " + name
     return web.Response(text=text)
 
-app = web.Application()
-app.add_routes([web.get('/', handle),
-                web.get('/{name}', handle)])
 
+@routes.get('/search-keywords')
+async def get_handler(request):
+    params = await request.json()
+    query = async_custom_search.AsyncCustomSearch(params['query'], int(params['startIndex']))
+    return web.json_response(await query.get_processed_results())
+
+
+@routes.get('/crawl-link')
+async def get_handler(request):
+    name = request.match_info.get('name', "Anonymous")
+    text = "Goodbye, " + name
+    return web.Response(text=text)
+
+
+app.add_routes(routes)
 
 if __name__ == '__main__':
     web.run_app(app)
