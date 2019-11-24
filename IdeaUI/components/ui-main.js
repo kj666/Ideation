@@ -5,7 +5,7 @@ import { SavedUI } from './ui-saved';
 export class MainUI extends LitElement {
 	static get properties() {
 		return {
-			linksGenerated: { type: Array },
+			searchWords: { type: Array },
 			task: { type: String },
 			savedLinks: { type: Array },
 			saveLink: { type: String }
@@ -14,7 +14,7 @@ export class MainUI extends LitElement {
 
 	constructor() {
 		super();
-		this.linksGenerated = [];
+		this.searchWords = [];
 		this.task = '';
 		this.savedLinks = [];
 		this.saveLink = '';
@@ -48,7 +48,7 @@ export class MainUI extends LitElement {
 				</div>	
 
 				<div class="row" style="width: 50%">
-				${this.linksGenerated.map(
+				${this.searchWords.map(
 					(i) => html`
 					<div class="col-sm-3">
 						<div class="card" style="width:8rem;">
@@ -72,7 +72,7 @@ export class MainUI extends LitElement {
 					<h1>Search Results</h1>
 						<div class="cardList" style="padding-top: 20px">
 								<div class="card">
-									<ul class="list-group list-group-flush">${this.linksGenerated.map(
+									<ul class="list-group list-group-flush">${this.searchWords.map(
 										(i) =>
 											html`<li class="list-group-item">
 												<i class="fas fa-arrow-alt-circle-left" style="font-size: 30px;"></i>${i.task}<i class="fas fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
@@ -85,7 +85,7 @@ export class MainUI extends LitElement {
 						<h1>Saved Ideas</h1>
 						<div class="cardList" style="padding-top: 20px">
 								<div class="card">
-									<ul class="list-group list-group-flush">${this.linksGenerated.map(
+									<ul class="list-group list-group-flush">${this.searchWords.map(
 										(i) => html`<li class="list-group-item">${i.task} </li>`
 									)}</ul>
 								</div>
@@ -111,8 +111,8 @@ export class MainUI extends LitElement {
 
 	addItem() {
 		if (this.task) {
-			this.linksGenerated = [
-				...this.linksGenerated,
+			this.searchWords = [
+				...this.searchWords,
 				{
 					task: this.task
 				}
