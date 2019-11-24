@@ -51,7 +51,7 @@ export class MainUI extends LitElement {
 				${this.searchWords.map(
 					(i) => html`
 					<div class="col-sm-3">
-						<div class="card" style="width:8rem;">
+						<div class="card" style="width:8rem; text-align:center;">
 						${i.task}
 						</div>
 					</div>
@@ -74,8 +74,12 @@ export class MainUI extends LitElement {
 								<div class="card">
 									<ul class="list-group list-group-flush">${this.searchWords.map(
 										(i) =>
-											html`<li class="list-group-item">
-												<i class="fas fa-arrow-alt-circle-left" style="font-size: 30px;"></i>${i.task}<i class="fas fa-arrow-alt-circle-right" style="font-size: 30px;"></i>
+											html`<li class="list-group-item" style="font-size:30px;">
+												 <i class="fas fa-arrow-alt-circle-left" @click="${this
+														.clickHandler}" style="font-size: 50px; float: left"></i>
+												 	${i.task}
+												 <i class="fas fa-arrow-alt-circle-right" @click="${this.clickHandler}"
+												style="font-size: 50px; float: right"></i>
 												</li>`
 									)}</ul>
 								</div>
@@ -95,6 +99,10 @@ export class MainUI extends LitElement {
 				</div>
 			</div>	
         `;
+	}
+
+	clickHandler(e) {
+		console.log('clicked');
 	}
 
 	// save item by pressing enter
