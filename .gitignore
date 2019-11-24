@@ -12,3 +12,5 @@ IdeaAPI/obj/Debug/netcoreapp3.0/
 IdeaAPI/.vs/IdeaAPI/DesignTimeBuild/
 
 IdeaAPI/obj/
+
+frontend/node_modules/
