@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit-element';
 import { HeaderElement } from './header-element';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-button';
-import { TableUI } from './ui-table';
 
 class IdeationUI extends LitElement {
 	static get styles() {
@@ -26,7 +25,6 @@ class IdeationUI extends LitElement {
 		`;
 	}
 
-	
 	render() {
 		return html`
 

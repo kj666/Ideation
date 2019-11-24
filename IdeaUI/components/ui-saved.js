@@ -59,7 +59,17 @@ export class SavedUI extends LitElement {
   			}
   			ui-saved .visibility-filters {
     			margin-top: calc(4 * var(--spacing));
-  			}	
+			  }	
+			  <!-- <div class="col-sm-6 text-center">
+						<h1>Saved Ideas</h1>
+						<div class="cardList" style="padding-top: 20px">
+								<div class="card">
+									<ul class="list-group list-group-flush">${this.searchWords.map(
+										(i) => html`<li class="list-group-item">${i.task} </li>`
+									)}</ul>
+								</div>
+						</div>
+					</div>	 -->
 		</style>	  -->
 		<div id="container">
 
