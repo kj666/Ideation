@@ -256,6 +256,7 @@ class MyApp extends connect(store)(LitElement) {
         <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
         <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
         <view-signup class="page" ?active="${this._page === 'signup'}"></view-signup>
+        <view-login class="page" ?active="${this._page === 'login'}"></view-login>
         <view-search class="page" ?active="${this._page === 'search'}"></view-search>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
