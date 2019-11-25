@@ -223,7 +223,7 @@ class MyApp extends connect(store)(LitElement) {
                   </li>
                 </ul>
                 <div class="my-2 my-lg-0">
-                  <a class="btn btn-outline-success my-2 my-sm-0" href="/view3">Sign Up <span class="sr-only">(current)</span></a>
+                  <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign Up <span class="sr-only">(current)</span></a>
                 </div>
             </div>
           </nav>
@@ -252,7 +252,7 @@ class MyApp extends connect(store)(LitElement) {
       <main role="main" class="main-content">
         <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
         <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
-        <my-view3 class="page" ?active="${this._page === 'view3'}"></my-view3>
+        <view-signup class="page" ?active="${this._page === 'signup'}"></view-signup>
         <view-search class="page" ?active="${this._page === 'search'}"></view-search>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
