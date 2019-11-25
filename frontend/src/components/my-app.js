@@ -206,8 +206,8 @@ class MyApp extends connect(store)(LitElement) {
           <div main-title>${this.appTitle}</div>
         </app-toolbar>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="/search">Ideaation</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/search">Ideation</a>
             
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -222,9 +222,12 @@ class MyApp extends connect(store)(LitElement) {
                       <a class="nav-link" href="/view2">Favorites <span class="sr-only">(current)</span></a>
                   </li>
                 </ul>
-                <div class="my-2 my-lg-0">
-                  <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign Up <span class="sr-only">(current)</span></a>
-                </div>
+                  <div class="my-2 my-lg-0" style="margin-right: 10px;">
+                    <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign Up <span class="sr-only">(current)</span></a>
+                  </div>
+                  <div class="my-2 my-lg-0">
+                    <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Login <span class="sr-only">(current)</span></a>
+                  </div>
             </div>
           </nav>
         <!-- This gets hidden on a small screen-->

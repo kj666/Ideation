@@ -1,10 +1,29 @@
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
-
-// These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+import '@polymer/iron-form/iron-form.js';
+import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-button/paper-button.js';
+
+import user from '../reducers/user.js';
+import { controller } from '../services/api-controller.js';
 
 class ViewSignUp extends PageViewElement {
+    static get properties() {
+        return {
+          // This is the data from the store.
+          _email: { type: String },
+          _username: { type: String },
+          _fullname: { type: String },
+          _password: { type: String },
+        };
+      }
+
+      constructor(){
+          super();
+          this.addEventListener('iron-form-submit', this.signup);
+      }
+
   static get styles() {
     return [
       SharedStyles
@@ -19,25 +38,35 @@ class ViewSignUp extends PageViewElement {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     
-    <div class="container">
-            <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="container" style="padding-top: 50px;">
+        <iron-form id="signup-form">
+            <form is="ajax-form">
+                <div class="form-group">
+                    <paper-input type="email" required label ="Email" id="email-input" placeholder="Enter email"></paper-input>
+                    <paper-input type="text" required id="username-input"  placeholder="Enter username"></paper-input>
+                    <paper-input type="text" required id="name-input" placeholder="Enter fullname"></paper-input>
+                    <paper-input type="password" required id="password-input" placeholder="Password"></paper-input>
+                </div>
+                    <paper-button  @click="${this.submitForm}" id="signup-button" class="btn btn-primary">Submit</paper-button>
+                </div>
+            </form>
+        </iron-form>
     </div>
     `;
+  }
+
+  
+submitForm(){
+    this.shadowRoot.querySelector("#signup-form").submit();
+  }
+
+  signup(){
+      var email = this.shadowRoot.querySelector("#email-input").value;
+      var user = this.shadowRoot.querySelector("#username-input").value;
+      var name = this.shadowRoot.querySelector("#name-input").value;
+      var password = this.shadowRoot.querySelector("#password-input").value;
+      controller.postUser(email, user, name, password);
+      console.log(email);
   }
 }
 
