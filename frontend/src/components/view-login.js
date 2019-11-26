@@ -8,7 +8,7 @@ import '@polymer/paper-button/paper-button.js';
 import user from '../reducers/user.js';
 import { controller } from '../services/api-controller.js';
 
-class ViewSignUp extends PageViewElement {
+class ViewLogin extends PageViewElement {
     static get properties() {
         return {
           // This is the data from the store.
@@ -21,7 +21,7 @@ class ViewSignUp extends PageViewElement {
 
       constructor(){
           super();
-          this.addEventListener('iron-form-submit', this.signup);
+          this.addEventListener('iron-form-submit', this.login);
       }
 
   static get styles() {
@@ -39,15 +39,13 @@ class ViewSignUp extends PageViewElement {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     
     <div class="container" style="padding-top: 50px;">
-        <iron-form id="signup-form">
+        <iron-form id="login-form">
             <form is="ajax-form">
                 <div class="form-group">
                     <paper-input type="email" required label ="Email" id="email-input" placeholder="Enter email"></paper-input>
-                    <paper-input type="text" required id="username-input"  placeholder="Enter username"></paper-input>
-                    <paper-input type="text" required id="name-input" placeholder="Enter full name"></paper-input>
                     <paper-input type="password" required id="password-input" placeholder="Password"></paper-input>
                 </div>
-                    <paper-button  @click="${this.submitForm}" id="signup-button" class="btn btn-primary">Sign Up</paper-button>
+                    <paper-button  @click="${this.submitForm}" id="login-button" class="btn btn-primary">Login</paper-button>
                 </div>
             </form>
         </iron-form>
@@ -57,17 +55,16 @@ class ViewSignUp extends PageViewElement {
 
   
 submitForm(){
-    this.shadowRoot.querySelector("#signup-form").submit();
+    this.shadowRoot.querySelector("#login-form").submit();
   }
 
-  signup(){
+  login(){
       var email = this.shadowRoot.querySelector("#email-input").value;
-      var user = this.shadowRoot.querySelector("#username-input").value;
-      var name = this.shadowRoot.querySelector("#name-input").value;
       var password = this.shadowRoot.querySelector("#password-input").value;
-      controller.postUser(email, user, name, password);
-      console.log(email);
+    //   controller.postUser(email, user, name, password);
+
+    console.log(password);
   }
 }
 
-window.customElements.define('view-signup', ViewSignUp);
+window.customElements.define('view-login', ViewLogin);

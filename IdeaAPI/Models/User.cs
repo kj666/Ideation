@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdeaAPI.Models
 {
+
     public class User
     {
         [BsonId]
@@ -18,6 +19,8 @@ namespace IdeaAPI.Models
         public string Email { get; set; }
 
         public string Fullname { get; set; }
+
+        public string Password { get; set; }
 
     }
 }

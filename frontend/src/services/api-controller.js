@@ -18,7 +18,6 @@ const sendHttpRequest = (method, url, data) => {
   });
 };
 
-let randomWords = [];
 
   const getRandomWords = () => {
     sendHttpRequest('GET', constants.RANDOM_URL).then(responseData => {
@@ -33,9 +32,23 @@ let randomWords = [];
       console.log(responseData);
     });
   };
+  
+  const postUser = (_email, _username, _name, _password ) => {
+    sendHttpRequest('POST', constants.POST_USER_URL,{
+      email: _email,
+      username: _username,
+      fullname: _name,
+      password: _password
+    }).then(responseData =>{
+      console.log(responseData);
+    }).catch(err => {
+      console.log(err, err.data);
+    });
+  };
 
 export const controller ={
     sendHttpRequest,
     getRandomWords,
-    getResearch
+    getResearch,
+    postUser
 }
