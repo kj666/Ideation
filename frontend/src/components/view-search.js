@@ -6,7 +6,7 @@ import constants from '../constants.js';
 import { SharedStyles } from './shared-styles.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
-import { searchActions } from '../actions/search.js' 
+import { searchActions } from '../actions/search.js';
 
 // const linkTemplate = html`
 // 	<div class = container>
@@ -26,13 +26,13 @@ import { searchActions } from '../actions/search.js'
 class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
-			_words: {type: Array},
+			_words: { type: Array },
 			current: { type: Number },
 			randomWords: { type: Array },
 			searchWords: { type: Array },
 			task: { type: String },
 			savedLinks: { type: Array },
-			saveLink: { type: String },
+			saveFavorites: { type: Array },
 			link: { type: String },
 			linksArray: { type: Array }
 		};
@@ -40,7 +40,6 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
 	constructor() {
 		super();
-		this.current = 0;
 		this.randomWords = [];
 		controller.sendHttpRequest('GET', constants.RANDOM_URL).then((responseData) => {
 			responseData.forEach((element) => {
@@ -54,7 +53,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this.searchWords = [];
 		this.task = '';
 		this.savedLinks = [];
-		this.saveLink = '';
+		this.saveFavorites = [];
 		this.current = 0;
 		this.linksArray = [
 			'https://en.wikipedia.org/wiki/Steve_Jobs',
@@ -114,25 +113,30 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
                 <div class="row justify-content-center" style="padding-top: 50px;">
 					<div class="col-6 text-center">
-						<h1>Search Result</h1>
+						<h3>Search Result</h3>
 					</div>
 				</div>
 			
-				<div class = container>
+				<div class = container style="padding-bottom: 50px;">
 		            <div class="row">
 			            <div class="col">
-				            <i class="fas fa-arrow-alt-circle-left" @click=${() =>
+				            <i class="fas fa-thumbs-down" @click=${() =>
 								this._removeLink(
 									this.link
-								)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px"></i> 
+								)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px; background:green"></i> 
 			            </div>
-			            <div class="col-8">
-				            <iframe src="${this.link}" width="700" height="400"></iframe>
+
+			            <div class="col-9">
+				            <iframe src="${this.link}" width="800" height="700"></iframe>
 			            </div>
-			            <div class="col">
-				            <i class="fas fa-arrow-alt-circle-right" @click=${this
-								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px "></i>
-                                <i class="fas fa-heart" style="font-size: 50px; float: right; padding-right:50px "></i>
+
+			            <div class="col" >
+				            <i class="fas fa-thumbs-up" @click=${this
+								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
+                                <i class="fas fa-heart" @click=${() =>
+									this._saveFavorites(
+										this.link
+									)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i>
                         </div>
     		        </div> 
                 </div>
@@ -140,30 +144,46 @@ class ViewSearch extends connect(store)(PageViewElement) {
     `;
 	}
 
-	firstUpdated(){
+	firstUpdated() {
 		super.firstUpdated();
 		store.dispatch(searchActions.getRandomWords());
 	}
-	stateChanged(state){
+	stateChanged(state) {
 		this._words = state.search.words;
 	}
 	_nextLink() {
-		// console.log('next clicked');
+		console.log('next clicked');
 
 		this.link = this.linksArray[this.current];
+		this.savedLinks.push(this.link);
+		console.log(this.savedLinks.length);
 
 		if (this.current == this.linksArray.length - 1) {
 			this.current = 0;
 		} else {
 			this.current++;
 		}
+
 		this.link = this.linksArray[this.current];
 	}
 
 	_removeLink(link) {
 		console.log('previous clicked');
 		this.linksArray = this.linksArray.filter((e) => e !== link);
-		this._nextLink();
+		// this._nextLink();
+		if (this.current == this.linksArray.length - 1) {
+			this.current = 0;
+		} else {
+			this.current++;
+		}
+
+		this.link = this.linksArray[this.current];
+	}
+
+	_saveFavorites(link) {
+		console.log('favorite clicked');
+		this.saveFavorites.push(link);
+		// console.log(this.saveFavorites.length);
 	}
 
 	shortcutListener(e) {
