@@ -117,26 +117,28 @@ class ViewSearch extends PageViewElement {
 				<div class = container>
 		            <div class="row">
 			            <div class="col">
-				            <i class="fas fa-arrow-alt-circle-left" @click=${this
-								._previousLink} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px"></i> 
+				            <i class="fas fa-arrow-alt-circle-left" @click=${() =>
+								this._removeLink(
+									this.link
+								)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px"></i> 
 			            </div>
 			            <div class="col-8">
 				            <iframe src="${this.link}" width="700" height="400"></iframe>
 			            </div>
 			            <div class="col">
 				            <i class="fas fa-arrow-alt-circle-right" @click=${this
-								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px "></i>
+								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px "></i>
+                                <i class="fas fa-heart" style="font-size: 50px; float: right; padding-right:50px "></i>
                         </div>
-    		        </div>   
+    		        </div> 
                 </div>
         </div>	
     `;
 	}
 
 	_nextLink() {
-		console.log('next clicked');
-		// this.link = this.linksArray[0];
-		console.log(this.current);
+		// console.log('next clicked');
+
 		this.link = this.linksArray[this.current];
 
 		if (this.current == this.linksArray.length - 1) {
@@ -147,8 +149,10 @@ class ViewSearch extends PageViewElement {
 		this.link = this.linksArray[this.current];
 	}
 
-	_previousLink() {
+	_removeLink(link) {
 		console.log('previous clicked');
+		this.linksArray = this.linksArray.filter((e) => e !== link);
+		this._nextLink();
 	}
 
 	shortcutListener(e) {
