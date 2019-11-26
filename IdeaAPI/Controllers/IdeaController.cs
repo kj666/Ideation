@@ -7,12 +7,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IdeaAPI.Models;
 using IdeaAPI.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace IdeaAPI.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [ApiController]
     [Route("[controller]")]
     public class IdeaController : ControllerBase
@@ -25,7 +27,7 @@ namespace IdeaAPI.Controllers
         }
 
         #region Research
-
+        [EnableCors("AllowOrigin")]
         [HttpGet("research")]
         public ActionResult<List<Research>> GetResearches() => _ideaService.GetAllResearches();
 
@@ -45,7 +47,7 @@ namespace IdeaAPI.Controllers
 
         #endregion Research
 
-
+        [EnableCors("AllowOrigin")]
         [HttpGet("words/random")]
         public async Task<List<Word>> CallWordAPI()
         {
@@ -61,6 +63,9 @@ namespace IdeaAPI.Controllers
 
         [HttpGet("user")]
         public ActionResult<List<User>> GetUsers() => _ideaService.GetAllUsers();
+
+        [HttpPost("user/login")]
+        public ActionResult<User> LoginUser(User user) => _ideaService.LoginUser(user.Email, user.Password);
 
         [HttpPost("user")]
         public ActionResult<User> CreateUser(User user) => _ideaService.CreateUser(user);

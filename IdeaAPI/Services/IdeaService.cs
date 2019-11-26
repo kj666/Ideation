@@ -96,6 +96,27 @@ namespace IdeaAPI.Services
                 return true;
         }
 
+        public User LoginUser(string email, string password)
+        {
+            User responseUser = new User();
+            User authUser = _users.Find(user => user.Email == email).FirstOrDefault();
+            if (authUser != null)
+            {
+                if (authUser.Email == email && authUser.Password == password)
+                    responseUser = authUser;
+                else
+                {
+                    responseUser.Email = "Invalid";
+                    responseUser.Username = "Invalid";
+                }
+            }
+            else
+            {
+                responseUser.Email = "Invalid";
+                responseUser.Username = "Invalid";
+            }
+            return responseUser;
+        }
 
         #endregion User
     }

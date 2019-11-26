@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit-element';
 import  './header-element.js';
-import './signup-view.js';
+import './view-signup.js/index.js';
 
 import '@vaadin/vaadin-text-field';
 

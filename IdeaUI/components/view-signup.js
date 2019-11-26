@@ -1,6 +1,7 @@
 import { LitElement, html } from "lit-element";
+import { PageViewElement } from './page-view-element.js';
 
-export class SignUpView extends LitElement{
+export class ViewSignUp extends PageViewElement{
     constructor(){
         super();
     }
@@ -14,4 +15,4 @@ export class SignUpView extends LitElement{
     }
 }
 
-customElements.define('signup-view', SignUpView);
+customElements.define('view-signup', ViewSignUp);
