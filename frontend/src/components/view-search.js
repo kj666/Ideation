@@ -3,8 +3,10 @@ import { PageViewElement } from './page-view-element.js';
 import { controller } from '../services/api-controller.js';
 import constants from '../constants.js';
 
-// These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+import { connect } from 'pwa-helpers/connect-mixin.js';
+import { store } from '../store.js';
+import { searchActions } from '../actions/search.js' 
 
 // const linkTemplate = html`
 // 	<div class = container>
@@ -21,9 +23,10 @@ import { SharedStyles } from './shared-styles.js';
 // 	</div>
 //       `;
 
-class ViewSearch extends PageViewElement {
+class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
+			_words: {type: Array},
 			current: { type: Number },
 			randomWords: { type: Array },
 			searchWords: { type: Array },
@@ -90,6 +93,7 @@ class ViewSearch extends PageViewElement {
 			</div>	
 
             <div class="row justify-content-center">
+			
 				${this.searchWords.map(
 					(i) => html`
 					<div class="col-2">
@@ -136,6 +140,13 @@ class ViewSearch extends PageViewElement {
     `;
 	}
 
+	firstUpdated(){
+		super.firstUpdated();
+		store.dispatch(searchActions.getRandomWords());
+	}
+	stateChanged(state){
+		this._words = state.search.words;
+	}
 	_nextLink() {
 		// console.log('next clicked');
 
@@ -175,15 +186,6 @@ class ViewSearch extends PageViewElement {
 				}
 			];
 			console.log(this.searchWords);
-			console.log(this.randomWords);
-			// controller.getRandomWords().then(responseData => {
-			//       console.log(responseData);
-			//     });
-			controller.sendHttpRequest('GET', constants.RANDOM_URL).then((responseData) => {
-				this.task = responseData;
-				console.log(responseData);
-			});
-
 			this.task = '';
 		}
 	}

@@ -7,6 +7,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
+import { installRouter } from "pwa-helpers/router.js";
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
@@ -34,7 +35,7 @@ export const navigateTo = page => dispatch => {
   );
 };
 
-const loadPage = (page) => (dispatch) => {
+export const loadPage = (page) => (dispatch) => {
   switch(page) {
     case 'view1':
       import('../components/my-view1.js').then((module) => {
@@ -51,6 +52,9 @@ const loadPage = (page) => (dispatch) => {
     case 'search':
       import('../components/view-search.js');
       break;
+    case 'favorites':
+      import('../components/view-favorites.js');
+      break;
     case 'signup':
         import('../components/view-signup.js');
         break;
@@ -65,7 +69,7 @@ const loadPage = (page) => (dispatch) => {
   dispatch(updatePage(page));
 };
 
-const updatePage = (page) => {
+export const updatePage = (page) => {
   return {
     type: UPDATE_PAGE,
     page

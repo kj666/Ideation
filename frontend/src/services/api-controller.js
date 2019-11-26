@@ -17,14 +17,12 @@ const sendHttpRequest = (method, url, data) => {
     return response.json();
   });
 };
-
-  const getRandomWords = () => {
-    sendHttpRequest('GET', constants.RANDOM_URL).then(responseData => {
-      randomWords = responseData;
-      console.log(responseData);
-    });
-  };
-
+const getRandomWords = () => {
+  sendHttpRequest('GET', constants.RANDOM_URL).then(responseData => {
+    randomWords = responseData;
+    console.log(responseData);
+  });
+};
   const getResearch = () => {
     sendHttpRequest('GET', constants.RESEARCH_URL).then(responseData => {
       console.log(responseData);
@@ -59,7 +57,6 @@ const sendHttpRequest = (method, url, data) => {
 
 export const controller ={
     sendHttpRequest,
-    getRandomWords,
     getResearch,
     postUser,
     loginUser

@@ -1,97 +1,29 @@
 import { store } from '../store.js';
 import constants from '../constants.js';
-import { searchService } from '../services/search-service.js';
+import { controller } from '../services/api-controller.js';
 
-const GET_RANDOM_WORD_REQUEST = "GET_RANDOM_WORD_REQUEST";
-const GET_RANDOM_WORD_SUCCESS = "GET_RANDOM_WORD_SUCCESS";
-const GET_RANDOM_WORD_FAILURE = "GET_RANDOM_WORD_FAILURE";
-const GET_RANDOM_WORD_FAILURE_HANDLED = "GET_RANDOM_WORD_FAILURE_HANDLED";
-
-const getRandomWordRequest = () =>{
-    return {
-        type: GET_RANDOM_WORD_REQUEST
-    }
+export const searchConstants = {
+    GET_RANDOM_WORD : 'RANDOM_WORD',
+    ADD_WORD: 'ADD_WORD',
+    REMOVE_WORD: 'REMOVE_WORD',
+    GET_LINKS: 'GET_LINKS',
+    FAVORITE_LINK: 'FAVORITE_LINK'
 }
 
-const getRandomWordSuccess = (randomWords) =>{
-    return {
-        type: GET_RANDOM_WORD_SUCCESS,
-        words: randomWords
-    }
-}
-
-const getRandomWordError = (error) =>{
-    return {
-        type: GET_RANDOM_WORD_FAILURE,
-        error
-    }
-}
-
-const getRandomWordErrorHandled = (error) =>{
-    return {
-        type: GET_RANDOM_WORD_FAILURE_HANDLED
-    }
-}
-
-const handleRespone = (response, status) => {
-    var errorMessage = "";
-    if (status == 401 || status == 400) {
-        errorMessage = response.error;
-    } else if (status != 200) {
-        errorMessage = constants.DEFAULT_NETWORK_ERROR_MESSAGE;
-    }
-    return errorMessage;
-}
-
-const handleError = () => {
+const getRandomWords = () => {
     return (dispatch) =>{
-        return setTimeout(()=>{
-            dispatch(getRandomWordErrorHandled());
-        }, 3000);
+        controller.sendHttpRequest('GET', constants.RANDOM_URL)
+        .then(responseData => {
+            console.log(responseData);
+            dispatch(requestRandomWords(responseData));
+          });
     }
 }
 
-const getRandomWords = () =>{
-    return (dispatch) =>{
-        dispatch(getRandomWordRequest());
-
-        var resStatus = 0;
-        var errorMessage = "";
-
-        searchService.getRandomWords()
-        .then(res=>{
-            resStatus = res.status
-            return res.json();
-        })
-        .then(jsonRes => {
-            errorMessage = handleRespone(json, resStatus);
-            if(errorMessage != ""){
-                throw new Error(errorMessage);
-            }
-            handleGetRandomWordSuccess(jsonRes);
-        })
-        .catch(error =>{
-            if(errorMessage == "" || !errorMessage){
-                dispatch(getRandomWordError(constants.DEFAULT_NETWORK_ERROR_MESSAGE));
-            } else{
-                dispatch(getRandomWordError(error.message));
-            }
-        });
-    }
-}
-
-const handleGetRandomWordSuccess = (randomWord) => {
-    store.dispatch(getRandomWordSuccess(randomWord));
+const requestRandomWords = (words) =>{
+    return {type: searchConstants.GET_RANDOM_WORD, words }
 }
 
 export const searchActions = {
-    GET_RANDOM_WORD_FAILURE,
-    GET_RANDOM_WORD_FAILURE_HANDLED,
-    GET_RANDOM_WORD_REQUEST,
-    GET_RANDOM_WORD_SUCCESS,
-    getRandomWordSuccess
-}
-export const searchThunks = {
-    handleError,
     getRandomWords
 }

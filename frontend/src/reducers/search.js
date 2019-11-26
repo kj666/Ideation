@@ -1,48 +1,34 @@
-import {searchActions} from '../actions/search.js';
+import { searchConstants } from '../actions/search.js';
 
 const INITIAL_STATE = {
-    isFetching: false,
-    error: '',
-    errorHandled: true,
-    randomWords: []
+    words: [],
+    links: []
 };
 
-const randomWords = (state = INITIAL_STATE, action) =>{
+const search = (state = INITIAL_STATE, action) =>{
     switch(action.type){
-        case searchActions.GET_RANDOM_WORD_REQUEST:
+        case searchConstants.GET_RANDOM_WORD:
             return{
                 ...state,
-                type: "get_random_word_request",
-                isFetching: true
+                words: action.words,
+                links: []
             };
-        case searchActions.GET_RANDOM_WORD_SUCCESS:
+        case searchConstants.ADD_WORD:
             return{
                 ...state,
-                type: "get_random_word_success",
-                isFetching: false,
-                randomWords: action.randomWords,
-                error: ''
+                words: [...state.words, action.newItem],
             };
-            case searchActions.GET_RANDOM_WORD_FAILURE:
-                    return {
-                        ...state,
-                        type: "get_random_word_failure",
-                        isFetching: false,
-                        error: action.error,
-                        errorHandled: false
-                    };
-                case searchActions.GET_RANDOM_WORD_HANDLED:
-                    return {
-                        ...state,
-                        type: "get_random_word_failure",
-                        errorHandled: true
-                    };
-                default:
-                    return {
+        case searchConstants.GET_LINKS:
+                return{
                     ...state,
-                    type: "default"
-                }
+                   links: action.links
+                };            
+        default:
+            return {
+            ...state,
+            type: "default"
+        }
     }
 }
 
-export default randomWords;
+export default search;

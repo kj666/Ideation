@@ -221,7 +221,7 @@ class MyApp extends connect(store)(LitElement) {
                       <a class="nav-link" href="/view1">Researches <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item" >
-                      <a class="nav-link" href="/view2">Favorites <span class="sr-only">(current)</span></a>
+                      <a class="nav-link" href="/favorites">Favorites <span class="sr-only">(current)</span></a>
                   </li>
                 </ul>
                 ${!this._loggedIn ? html`
@@ -264,6 +264,7 @@ class MyApp extends connect(store)(LitElement) {
       <main role="main" class="main-content">
         <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
         <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
+        <view-favorites class="page" ?active="${this._page === 'favorites'}"></view-favorites>
         <view-signup class="page" ?active="${this._page === 'signup'}"></view-signup>
         <view-login class="page" ?active="${(this._page === 'login') && this._loggedIn === false}"></view-login>
         <view-search class="page" ?active="${this._page === 'search'}"></view-search>
