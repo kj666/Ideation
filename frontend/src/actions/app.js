@@ -55,6 +55,9 @@ export const loadPage = (page) => (dispatch) => {
     case 'favorites':
       import('../components/view-favorites.js');
       break;
+    case 'researches':
+      import('../components/view-researches.js');
+      break;
     case 'signup':
         import('../components/view-signup.js');
         break;

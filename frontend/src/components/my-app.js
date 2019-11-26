@@ -218,7 +218,7 @@ class MyApp extends connect(store)(LitElement) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                      <a class="nav-link" href="/view1">Researches <span class="sr-only">(current)</span></a>
+                      <a class="nav-link" href="/researches">Researches <span class="sr-only">(current)</span></a>
                   </li>
                   <li class="nav-item" >
                       <a class="nav-link" href="/favorites">Favorites <span class="sr-only">(current)</span></a>
@@ -264,6 +264,7 @@ class MyApp extends connect(store)(LitElement) {
       <main role="main" class="main-content">
         <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
         <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
+        <view-researches class="page" ?active="${this._page === 'researches'}"></view-researches>
         <view-favorites class="page" ?active="${this._page === 'favorites'}"></view-favorites>
         <view-signup class="page" ?active="${this._page === 'signup'}"></view-signup>
         <view-login class="page" ?active="${(this._page === 'login') && this._loggedIn === false}"></view-login>
