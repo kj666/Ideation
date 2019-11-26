@@ -1,4 +1,4 @@
-import { html } from 'lit-element';
+import { html, css } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import { controller } from '../services/api-controller.js';
 import constants from '../constants.js';
@@ -27,9 +27,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
 			_words: { type: Array },
+			
 			current: { type: Number },
-			randomWords: { type: Array },
-			searchWords: { type: Array },
 			task: { type: String },
 			savedLinks: { type: Array },
 			saveFavorites: { type: Array },
@@ -40,17 +39,6 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
 	constructor() {
 		super();
-		this.randomWords = [];
-		controller.sendHttpRequest('GET', constants.RANDOM_URL).then((responseData) => {
-			responseData.forEach((element) => {
-				// console.log(element.word);
-				this.randomWords.push(element.word);
-			});
-			// this.randomWords.push
-			// this.randomWords = responseData.word;
-			// console.log(responseData);
-		});
-		this.searchWords = [];
 		this.task = '';
 		this.savedLinks = [];
 		this.saveFavorites = [];
@@ -64,7 +52,11 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 
 	static get styles() {
-		return [ SharedStyles ];
+		return [ SharedStyles, css`
+		.tag-space{
+			margin: 10px;
+		}` ];
+
 	}
 
 	render() {
@@ -91,20 +83,14 @@ class ViewSearch extends connect(store)(PageViewElement) {
 				</div>
 			</div>	
 
-            <div class="row justify-content-center">
-			
-				${this.searchWords.map(
+            <div class=" row d-flex justify-content-center">
+				${this._words.map(
 					(i) => html`
-					<div class="col-2">
-						<div class="card" style="width:8rem; text-align:center; background:green">
-						${i.task}
-						</div>
-					</div>
+					<a class="badge badge-dark tag-space" style="color: #fff;">${i.word}</a>
 				`
 				)}
 			</div>			
 
-                
             <div class="row justify-content-center" style="padding-top: 50px;">
 					<div class="col-6 text-center">
 						<button class="btn btn-secondary btn-block bg-dark" type="submit">Search</button>
@@ -150,6 +136,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 	stateChanged(state) {
 		this._words = state.search.words;
+		console.log("test");
+		console.log(state.search.words);
 	}
 	_nextLink() {
 		console.log('next clicked');
@@ -188,7 +176,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
 	shortcutListener(e) {
 		if (e.key === 'Enter') {
-			this.addItem();
+			this.addWord();
 		}
 	}
 
@@ -197,21 +185,13 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		e.target.value = '';
 	}
 
-	addItem() {
-		if (this.task) {
-			this.searchWords = [
-				...this.searchWords,
-				{
-					task: this.task
-				}
-			];
-			console.log(this.searchWords);
-			this.task = '';
-		}
+	addWord(){
+		var newWord = {id: 0, word: this.task};
+		store.dispatch(searchActions.addWord(newWord));
 	}
 
 	onSearch() {
-		console.log(this.randomWords);
+		console.log(this._words);
 	}
 }
 

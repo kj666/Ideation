@@ -24,6 +24,9 @@ const requestRandomWords = (words) =>{
     return {type: searchConstants.GET_RANDOM_WORD, words }
 }
 
+const addWord = (word) =>{ return { type: searchConstants.ADD_WORD, word } }
+
 export const searchActions = {
-    getRandomWords
+    getRandomWords,
+    addWord
 }

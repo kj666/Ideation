@@ -16,7 +16,7 @@ const search = (state = INITIAL_STATE, action) =>{
         case searchConstants.ADD_WORD:
             return{
                 ...state,
-                words: [...state.words, action.newItem],
+                words: [...state.words, action.word],
             };
         case searchConstants.GET_LINKS:
                 return{
