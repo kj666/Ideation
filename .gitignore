@@ -14,3 +14,7 @@ IdeaAPI/.vs/IdeaAPI/DesignTimeBuild/
 IdeaAPI/obj/
 
 frontend/node_modules/
+
+*.DS_Store
+*.pyc
+*.idea/
