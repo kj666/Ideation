@@ -6,34 +6,38 @@ import constants from '../constants.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-const linkTemplate = html`
-	<div class = container>
-		<div class="row">
-			<div class="col text-center" style="background:red;">
-				<i class="fas fa-arrow-alt-circle-left" style="font-size: 50px; float: left;"></i> 
-			</div>
-			<div class="col-8">
-				<iframe src="https://lit-element.polymer-project.org/guide/lifecycle" width="700" height="400"></iframe>
-			</div>
-			<div class="col" style="background:yellow">
-				<i class="fas fa-arrow-alt-circle-right" style="font-size: 50px; float: right"></i>
-    		</div>
-	</div>
-      `;
+// const linkTemplate = html`
+// 	<div class = container>
+// 		<div class="row">
+// 			<div class="col">
+// 				<i class="fas fa-arrow-alt-circle-left" style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px"></i>
+// 			</div>
+// 			<div class="col-8">
+// 				<iframe src="https://lit-element.polymer-project.org/guide/lifecycle" width="700" height="400"></iframe>
+// 			</div>
+// 			<div class="col">
+// 				<i class="fas fa-arrow-alt-circle-right" style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px "></i>
+//     		</div>
+// 	</div>
+//       `;
 
 class ViewSearch extends PageViewElement {
 	static get properties() {
 		return {
+			current: { type: Number },
 			randomWords: { type: Array },
 			searchWords: { type: Array },
 			task: { type: String },
 			savedLinks: { type: Array },
-			saveLink: { type: String }
+			saveLink: { type: String },
+			link: { type: String },
+			linksArray: { type: Array }
 		};
 	}
 
 	constructor() {
 		super();
+		this.current = 0;
 		this.randomWords = [];
 		controller.sendHttpRequest('GET', constants.RANDOM_URL).then((responseData) => {
 			responseData.forEach((element) => {
@@ -48,6 +52,13 @@ class ViewSearch extends PageViewElement {
 		this.task = '';
 		this.savedLinks = [];
 		this.saveLink = '';
+		this.current = 0;
+		this.linksArray = [
+			'https://en.wikipedia.org/wiki/Steve_Jobs',
+			'https://en.wikipedia.org/wiki/Bill_Gates',
+			'https://en.wikipedia.org/wiki/Elon_Musk'
+		];
+		this.link = this.linksArray[this.current];
 	}
 
 	static get styles() {
@@ -103,12 +114,43 @@ class ViewSearch extends PageViewElement {
 					</div>
 				</div>
 			
-				${linkTemplate}
-                    
-            
+				<div class = container>
+		            <div class="row">
+			            <div class="col">
+				            <i class="fas fa-arrow-alt-circle-left" @click=${this
+								._previousLink} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px"></i> 
+			            </div>
+			            <div class="col-8">
+				            <iframe src="${this.link}" width="700" height="400"></iframe>
+			            </div>
+			            <div class="col">
+				            <i class="fas fa-arrow-alt-circle-right" @click=${this
+								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px "></i>
+                        </div>
+    		        </div>   
+                </div>
         </div>	
     `;
 	}
+
+	_nextLink() {
+		console.log('next clicked');
+		// this.link = this.linksArray[0];
+		console.log(this.current);
+		this.link = this.linksArray[this.current];
+
+		if (this.current == this.linksArray.length - 1) {
+			this.current = 0;
+		} else {
+			this.current++;
+		}
+		this.link = this.linksArray[this.current];
+	}
+
+	_previousLink() {
+		console.log('previous clicked');
+	}
+
 	shortcutListener(e) {
 		if (e.key === 'Enter') {
 			this.addItem();
@@ -141,7 +183,6 @@ class ViewSearch extends PageViewElement {
 			this.task = '';
 		}
 	}
-	addSavedItems() {}
 
 	onSearch() {
 		console.log(this.randomWords);
