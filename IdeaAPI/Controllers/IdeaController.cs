@@ -64,6 +64,9 @@ namespace IdeaAPI.Controllers
         [HttpGet("user")]
         public ActionResult<List<User>> GetUsers() => _ideaService.GetAllUsers();
 
+        [HttpPost("user/login")]
+        public ActionResult<User> LoginUser(User user) => _ideaService.LoginUser(user.Email, user.Password);
+
         [HttpPost("user")]
         public ActionResult<User> CreateUser(User user) => _ideaService.CreateUser(user);
 

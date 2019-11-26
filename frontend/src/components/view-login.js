@@ -5,17 +5,15 @@ import '@polymer/iron-form/iron-form.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 
-import user from '../reducers/user.js';
 import { controller } from '../services/api-controller.js';
+import { userActions } from '../actions/user.js';
+import { store } from '../store.js'
+import { connect } from 'pwa-helpers/connect-mixin.js';
 
-class ViewLogin extends PageViewElement {
+class ViewLogin extends connect(store)(PageViewElement) {
     static get properties() {
         return {
-          // This is the data from the store.
-          _email: { type: String },
-          _username: { type: String },
-          _fullname: { type: String },
-          _password: { type: String },
+          loggedIn: false
         };
       }
 
@@ -54,16 +52,19 @@ class ViewLogin extends PageViewElement {
   }
 
   
-submitForm(){
+    submitForm(){
     this.shadowRoot.querySelector("#login-form").submit();
   }
 
   login(){
       var email = this.shadowRoot.querySelector("#email-input").value;
       var password = this.shadowRoot.querySelector("#password-input").value;
-    //   controller.postUser(email, user, name, password);
+      store.dispatch(userActions.login(email, password));
+  }
 
-    console.log(password);
+  stateChanged(state){
+      this.loggedIn = state.user.loggedIn;
+      console.log(this.loggedIn + " "+state.user.loggedIn + " "+ JSON.stringify(state.user.user));
   }
 }
 

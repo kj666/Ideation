@@ -27,6 +27,13 @@ export const navigate = (path) => (dispatch) => {
   dispatch(updateDrawerState(false));
 };
 
+export const navigateTo = page => dispatch => {
+  window.history.pushState({}, "", page);
+  installRouter(location =>
+      dispatch(navigate(decodeURIComponent(location.pathname)))
+  );
+};
+
 const loadPage = (page) => (dispatch) => {
   switch(page) {
     case 'view1':

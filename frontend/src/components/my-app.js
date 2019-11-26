@@ -33,6 +33,7 @@ import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import { menuIcon } from './my-icons.js';
 import './snack-bar.js';
+import { userActions } from '../actions/user.js';
 
 class MyApp extends connect(store)(LitElement) {
   static get properties() {
@@ -41,7 +42,8 @@ class MyApp extends connect(store)(LitElement) {
       _page: { type: String },
       _drawerOpened: { type: Boolean },
       _snackbarOpened: { type: Boolean },
-      _offline: { type: Boolean }
+      _offline: { type: Boolean },
+      _loggedIn: { type: Boolean }
     };
   }
 
@@ -222,12 +224,19 @@ class MyApp extends connect(store)(LitElement) {
                       <a class="nav-link" href="/view2">Favorites <span class="sr-only">(current)</span></a>
                   </li>
                 </ul>
-                  <div class="my-2 my-lg-0" style="margin-right: 10px;">
+                ${!this._loggedIn ? html`
+                <div class="my-2 my-lg-0" style="margin-right: 10px;">
                     <a class="btn btn-outline-success my-2 my-sm-0" href="/signup">Sign Up <span class="sr-only">(current)</span></a>
                   </div>
                   <div class="my-2 my-lg-0">
                     <a class="btn btn-outline-success my-2 my-sm-0" href="/login">Login <span class="sr-only">(current)</span></a>
                   </div>
+                  `:html`
+                  <div class="my-2 my-lg-0">
+                    <a class="btn btn-outline-success my-2 my-sm-0" @click="${this.logout}">Logout<span class="sr-only">(current)</span></a>
+                  </div>`}
+                  
+                  
             </div>
           </nav>
         <!-- This gets hidden on a small screen-->
@@ -256,7 +265,7 @@ class MyApp extends connect(store)(LitElement) {
         <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
         <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
         <view-signup class="page" ?active="${this._page === 'signup'}"></view-signup>
-        <view-login class="page" ?active="${this._page === 'login'}"></view-login>
+        <view-login class="page" ?active="${(this._page === 'login') && this._loggedIn === false}"></view-login>
         <view-search class="page" ?active="${this._page === 'search'}"></view-search>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
       </main>
@@ -309,6 +318,11 @@ class MyApp extends connect(store)(LitElement) {
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
+    this._loggedIn = state.user.loggedIn;
+  }
+  logout(){
+    store.dispatch(userActions.logout());
+    localStorage.removeItem("user");
   }
 }
 

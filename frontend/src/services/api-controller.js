@@ -18,14 +18,12 @@ const sendHttpRequest = (method, url, data) => {
   });
 };
 
-
   const getRandomWords = () => {
     sendHttpRequest('GET', constants.RANDOM_URL).then(responseData => {
       randomWords = responseData;
       console.log(responseData);
     });
   };
-
 
   const getResearch = () => {
     sendHttpRequest('GET', constants.RESEARCH_URL).then(responseData => {
@@ -46,9 +44,23 @@ const sendHttpRequest = (method, url, data) => {
     });
   };
 
+  const loginUser = (_email, _password) =>{
+    sendHttpRequest('POST', constants.LOGIN_USER_URL,{
+      email: _email,
+      password: _password
+    }).then(responseData =>{
+      localStorage.setItem('user',responseData);
+      console.log(responseData);
+    }).catch(err => {
+      console.log(err, err.data);
+    });
+  };
+
+
 export const controller ={
     sendHttpRequest,
     getRandomWords,
     getResearch,
-    postUser
+    postUser,
+    loginUser
 }

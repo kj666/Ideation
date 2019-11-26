@@ -1,5 +1,5 @@
 
-import { INCREMENT, DECREMENT } from '../actions/counter.js';
+import { userConstants } from '../actions/user.js';
 
 const INITIAL_STATE = {
     loggedIn: false,
@@ -8,16 +8,26 @@ const INITIAL_STATE = {
 
 const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case INCREMENT:
+    case userConstants.LOGIN_REQUEST:
       return {
-        clicks: state.clicks + 1,
-        value: state.value + 1
+        ...state,
+        loggedIn: true,
+        user: action.user
       };
-    case DECREMENT:
+    case userConstants.LOGIN_SUCCESS:
       return {
-        clicks: state.clicks + 1,
-        value: state.value - 1
+        ...state,
+        loggedIn: true,
+        user: action.user
       };
+    case userConstants.LOGIN_FAILURE:
+      return {
+        ...state,
+        loggedIn: false,
+        user: {}
+      };
+    case userConstants.LOGOUT:
+        return INITIAL_STATE
     default:
       return state;
   }
