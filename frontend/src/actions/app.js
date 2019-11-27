@@ -58,6 +58,9 @@ export const loadPage = (page) => (dispatch) => {
     case 'researches':
       import('../components/view-researches.js');
       break;
+    case 'research':
+      import('../components/view-research.js');
+      break;
     case 'signup':
         import('../components/view-signup.js');
         break;

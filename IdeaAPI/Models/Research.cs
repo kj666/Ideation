@@ -26,9 +26,17 @@ namespace IdeaAPI.Models
 
     public class Favorite
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
 
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string User_id { get; set; }
+
+        public LinkResult Results { get; set; }
+
+        public DateTime Timestamp { get; set; }
     }
-
     public class Word
     {
         public int id { get; set; }

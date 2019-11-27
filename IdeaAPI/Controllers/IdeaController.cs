@@ -50,6 +50,41 @@ namespace IdeaAPI.Controllers
 
         #endregion Research
 
+        #region Favorite
+
+        [HttpPost("favorite/user/{username}")]
+        public ActionResult<Favorite> PostFavorite(Favorite favorite, string username) => _ideaService.CreateUserFavorite(favorite, username);
+        
+        [HttpGet("favorite/user/{username}")]
+        public ActionResult<List<Favorite>> GetFavoriteByUserName(string username) => _ideaService.GetFavoriteByUsername(username);
+
+
+        #endregion Favorite
+
+
+        #region User
+
+        [HttpGet("user")]
+        public ActionResult<List<User>> GetUsers() => _ideaService.GetAllUsers();
+
+        [HttpPost("user/login")]
+        public ActionResult<User> LoginUser(User user) => _ideaService.LoginUser(user.Email, user.Password);
+
+        [HttpPost("user")]
+        public ActionResult<User> CreateUser(User user) => _ideaService.CreateUser(user);
+
+        [HttpGet("user/{username}")]
+        public ActionResult<User> GetUser(string username) => _ideaService.GetUser(username);
+
+        [HttpGet("user/exist/username/{username}")]
+        public Boolean UserUsernameExist(string username) => _ideaService.UserUsernameExist(username);
+
+        [HttpGet("user/exist/email/{email}")]
+        public Boolean UserEmailExist(string email) => _ideaService.UserEmailExist(email);
+
+        #endregion User
+
+
         [HttpGet("words/random")]
         public async Task<List<Word>> CallWordAPI()
         {
@@ -79,37 +114,7 @@ namespace IdeaAPI.Controllers
                 var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 return JsonConvert.DeserializeObject<SearchResult>(responseBody);
-                //var json = JsonConvert.SerializeObject(request);
-                //var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
-
-                //var content = await client.GetStringAsync(searchURL, stringContent);
-                //return JsonConvert.DeserializeObject<SearchResult>(content);
             }
         }
-
-
-
-
-        #region User
-
-        [HttpGet("user")]
-        public ActionResult<List<User>> GetUsers() => _ideaService.GetAllUsers();
-
-        [HttpPost("user/login")]
-        public ActionResult<User> LoginUser(User user) => _ideaService.LoginUser(user.Email, user.Password);
-
-        [HttpPost("user")]
-        public ActionResult<User> CreateUser(User user) => _ideaService.CreateUser(user);
-
-        [HttpGet("user/{username}")]
-        public ActionResult<User> GetUser(string username) => _ideaService.GetUser(username);
-
-        [HttpGet("user/exist/username/{username}")]
-        public Boolean UserUsernameExist(string username) => _ideaService.UserUsernameExist(username);
-
-        [HttpGet("user/exist/email/{email}")]
-        public Boolean UserEmailExist(string email) => _ideaService.UserEmailExist(email);
-
-        #endregion User
     }
 }

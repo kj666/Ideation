@@ -8,7 +8,10 @@ export const searchConstants = {
     REMOVE_WORD: 'REMOVE_WORD',
     GET_LINKS: 'GET_LINKS',
     SAVE_RESEARCH: 'SAVE_RESEARCH',
-    FAVORITE_LINK: 'FAVORITE_LINK'
+
+    FAVORITE_LINK: 'FAVORITE_LINK',
+    RESEARCH_LINK: 'RESEARCH_LINK',
+    RESET_RESEARCH: 'RESET_RESEARCH'
 }
 
 const getRandomWords = () => {
@@ -33,9 +36,9 @@ const getSearchLinks = (wordList) => {
     }
 }
 
-const postResearch =(research) =>{
+const postResearch =(_username,_research) =>{
     return (dispatch) =>{
-        sendHttpRequest('POST', constants.RESEARCH_USER_URL+'/'+_research.username, _research)
+        controller.sendHttpRequest('POST', constants.RESEARCH_USER_URL+"/"+_username, _research)
         .then(responseData =>{
             console.log(responseData);
             dispatch(saveResearch(responseData));
