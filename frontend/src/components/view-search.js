@@ -13,7 +13,6 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		return {
 			_words: { type: Array },
 			_haveLinks: false,
-			_link: {type : Array},
 			current: { type: Number },
 			task: { type: String },
 			savedLinks: { type: Array },
@@ -29,12 +28,13 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this.savedLinks = [];
 		this.saveFavorites = [];
 		this.current = 0;
-		this.linksArray = [
-			'https://en.wikipedia.org/wiki/Steve_Jobs',
-			'https://en.wikipedia.org/wiki/Bill_Gates',
-			'https://en.wikipedia.org/wiki/Elon_Musk'
-		];
-		// this.link = this.linksArray[this.current];
+		this.linksArray =[];
+		// this.linksArray = [
+		// 	'https://en.wikipedia.org/wiki/Steve_Jobs',
+		// 	'https://en.wikipedia.org/wiki/Bill_Gates',
+		// 	'https://en.wikipedia.org/wiki/Elon_Musk'
+		// ];
+		// this.link = this.linksArray[this.current].value;
 		// this.link = this._link[this.current].link;
 	}
 
@@ -59,7 +59,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     
     
-        <div class="container" style="padding-top: 50px;">
+	<div class="container" style="padding-top: 50px;">
             <div class="container" style="padding-top: 50px;">
 				<div class="row justify-content-center">
 					<div class="col-6">
@@ -83,44 +83,51 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
             <div class="row justify-content-center" style="padding-top: 50px;">
 					<div class="col-6 text-center">
-						<button class="btn btn-secondary btn-block bg-dark" @click="${this.onSearch}">Search</button>
+						<button class="btn btn-secondary btn-block bg-dark" @click=${this.onSearch}>Search</button>
 					</div>
-			</div>
-
-			${this._haveLinks ? html`<div>	
-			<div class="row justify-content-center" style="padding-top: 50px;">
-				<div class="col-6 text-center">
-					<h3>Search Result</h3>
 				</div>
-			</div>
+	${this._haveLinks ? html`
+			<div>	
+                <div class="row justify-content-center" style="padding-top: 50px">
+					<div class="col-6 text-center">
+						<h3>Search Result</h3>
+					</div>
+					<div class="col-2 text-center" style="padding-right: 110px">
+					<i class="fas fa-heart" @click=${() =>
+						this._saveFavorites(this.link)} style="font-size: 50px; float: right; padding-right:50px;"></i>
+					</div>
+                	<div class = 'col-4 text-center'>
+						<button class="btn btn-secondary btn-large bg-dark" type="submit" @click=${this
+							.saveMyResearch}>Save My Research</button>
+                	</div>
+				</div>
 			
-			<div class = container style="padding-bottom: 50px;">
-				<div class="row">
-					<div class="col">
-						<i class="fas fa-thumbs-down" @click=${() =>
-							this._removeLink(
-								this.link
-							)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px; background:green"></i> 
-					</div>
-
-					<div class="col-9">
-						<iframe src="${this.link}" width="800" height="700"></iframe>
-					</div>
-
-					<div class="col" >
-						<i class="fas fa-thumbs-up" @click=${this
-							._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
-							<i class="fas fa-heart" @click=${() =>
-								this._saveFavorites(
+				<div class = container style="padding-bottom: 50px;">
+		            <div class="row">
+			            <div class="col">
+				            <i class="fas fa-thumbs-down" @click=${() =>
+								this._removeLink(
 									this.link
-								)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i>
-					</div>
-				</div> 
-			</div>
-		</div>`:``}
+								)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px; background:green"></i> 
+			            </div>
 
+			            <div class="col-9">
+				            <iframe src="${this.link}" width="800" height="700"></iframe>
+			            </div>
+
+			            <div class="col" >
+				            <i class="fas fa-thumbs-up" @click=${this
+								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
+                                <!-- <i class="fas fa-heart" @click=${() =>
+									this._saveFavorites(
+										this.link
+									)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i> -->
+                        </div>
+    		        </div> 
+				</div>
+			</div>`:''}
         </div>	
-    `;
+    `
 	}
 
 	saveMyResearch() {
@@ -137,8 +144,11 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 	stateChanged(state) {
 		this._words = state.search.words;
+		this.linksArray = state.search.links;
+		this._haveLinks = state.search.haveLinks;
+		console.log(state.search.links);
 		console.log("test");
-		console.log(state.search.words);
+		
 	}
 	_nextLink() {
 		console.log('next clicked');

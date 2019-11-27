@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:5000';
+// const API_URL = 'http://localhost:5000';
 
 const DEFAULT_NETWORK_ERROR_MESSAGE = 'A network error has occurred';
 

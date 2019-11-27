@@ -22,7 +22,7 @@ const search = (state = INITIAL_STATE, action) =>{
         case searchConstants.GET_LINKS:
                 return{
                     ...state,
-                   links: action.links,
+                   links: action,
                    haveLinks: true
                 };            
         default:
