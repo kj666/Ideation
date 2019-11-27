@@ -16,7 +16,9 @@ const INITIAL_STATE = {
         "startIndex":0
 },
     haveLinks: true,
-    research: {}
+    research: {},
+    researchLinks: {},
+    favoriteLink: {}
 };
 
 const search = (state = INITIAL_STATE, action) =>{
@@ -42,7 +44,22 @@ const search = (state = INITIAL_STATE, action) =>{
             return{
                 ...state,
                 research: action.research
-            };          
+            };
+        case searchConstants.FAVORITE_LINK:
+            return{
+                ...state,
+                research: action.research
+            }; 
+        case searchConstants.RESEARCH_LINK:
+            return{
+                ...state,
+                research: action.research
+            };    
+        case searchConstants.RESET_RESEARCH:
+        return{
+            ...state,
+            researchLinks: []
+        };   
         default:
             return {
             ...state,
