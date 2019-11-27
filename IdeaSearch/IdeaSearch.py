@@ -1,8 +1,11 @@
 import argparse
-import logging
 import json
+import logging
+
 from aiohttp import web
+
 import async_custom_search
+import async_link_scraper
 
 DEFAULT_PORT = 8888
 
@@ -14,13 +17,13 @@ def server_setup():
     routes = web.RouteTableDef()
 
     @routes.get('/')
-    async def get_search_results(request):
+    async def get_default(request):
         name = request.match_info.get('name', "Anonymous")
         text = "Hello, " + name
         return web.Response(text=text)
 
     @routes.get('/search-keywords')
-    async def get_handler(request):
+    async def get_search_results(request):
         try:
             params = await request.json()
             query = async_custom_search.AsyncCustomSearch(params['query'], int(params['startIndex']))
@@ -30,11 +33,16 @@ def server_setup():
 
         return web.json_response(await query.get_processed_results())
 
-    @routes.get('/crawl-link')
-    async def get_handler(request):
-        name = request.match_info.get('name', "Anonymous")
-        text = "Goodbye, " + name
-        return web.Response(text=text)
+    @routes.get('/scrape-link')
+    async def get_scraped_link(request):
+        try:
+            params = await request.json()
+            scraper = async_link_scraper.AsyncLinkScraper(params['link'], params['query'])
+        except (json.decoder.JSONDecodeError, KeyError):
+            logging.error("Invalid JSON body received")
+            raise web.HTTPBadRequest()
+
+        return await scraper.get_links()
 
     a.add_routes(routes)
     return a
@@ -55,7 +63,6 @@ def parser_setup():
 
     p.add_argument("-p", "--port", action=PortAction, type=int, default=DEFAULT_PORT,
                    help=f"specify port, defaults to {DEFAULT_PORT}")
-
     return p
 
 

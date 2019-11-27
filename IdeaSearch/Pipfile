@@ -12,6 +12,8 @@ google-auth-oauthlib = "*"
 aiohttp = "*"
 aiodns = "*"
 cchardet = "*"
+beautifulsoup4 = "*"
+lxml = "*"
 
 [requires]
 python_version = "3.7"
