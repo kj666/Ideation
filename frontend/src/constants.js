@@ -4,8 +4,11 @@ const DEFAULT_NETWORK_ERROR_MESSAGE = 'A network error has occurred';
 
 const API_URL ="https://localhost:44315/idea";
 const RESEARCH_URL = `${API_URL}/research`;
+const RESEARCH_USER_URL = `${API_URL}/research/user/`;
 const POST_USER_URL = `${API_URL}/user`;
 const LOGIN_USER_URL = `${API_URL}/user/login`;
+
+
 const SEARCH_URL = `${API_URL}/search-keywords`;
 
 const SEARCH_API_URL = "http://3.87.182.8:50000";
@@ -18,6 +21,7 @@ const RANDOM_URL = `${API_URL}/words/random`;
 const constants ={
     RANDOM_URL,
     RESEARCH_URL,
+    RESEARCH_USER_URL,
     POST_USER_URL,
     LOGIN_USER_URL,
     API_URL,

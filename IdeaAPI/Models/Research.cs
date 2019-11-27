@@ -18,7 +18,7 @@ namespace IdeaAPI.Models
 
         public List<string> Keywords { get; set; }
 
-        public List<string> Results { get; set; }
+        public List<LinkResult> Results { get; set; }
 
         public DateTime Timestamp { get; set; }
         

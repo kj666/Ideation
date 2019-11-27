@@ -12,7 +12,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
 			_words: { type: Array },
-			_haveLinks: false,
+			_haveLinks: true,
 			current: { type: Number },
 			task: { type: String },
 			savedLinks: { type: Array },
@@ -28,7 +28,19 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this.savedLinks = [];
 		this.saveFavorites = [];
 		this.current = 0;
-		this.linksArray =[];
+		this.linksArray ={"links": [
+			{
+				"link": "https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae",
+				"title": "Descriptions of the larva and pupa of the short palped crane fly ...",
+				"snippet": "Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ..."
+			},
+			{
+				"link": "http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf",
+				"title": "Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...",
+				"snippet": "continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ..."
+			}],
+			"startIndex":0
+	};
 		// this.linksArray = [
 		// 	'https://en.wikipedia.org/wiki/Steve_Jobs',
 		// 	'https://en.wikipedia.org/wiki/Bill_Gates',

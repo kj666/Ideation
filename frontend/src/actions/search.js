@@ -7,6 +7,7 @@ export const searchConstants = {
     ADD_WORD: 'ADD_WORD',
     REMOVE_WORD: 'REMOVE_WORD',
     GET_LINKS: 'GET_LINKS',
+    SAVE_RESEARCH: 'SAVE_RESEARCH',
     FAVORITE_LINK: 'FAVORITE_LINK'
 }
 
@@ -32,6 +33,18 @@ const getSearchLinks = (wordList) => {
     }
 }
 
+const postResearch =(research) =>{
+    return (dispatch) =>{
+        sendHttpRequest('POST', constants.RESEARCH_USER_URL+'/'+_research.username, _research)
+        .then(responseData =>{
+            console.log(responseData);
+            dispatch(saveResearch(responseData));
+          }).catch(err => {
+            console.log(err, err.data);
+          });
+    }
+}
+
 const requestRandomWords = (words) =>{
     return {type: searchConstants.GET_RANDOM_WORD, words }
 }
@@ -40,8 +53,11 @@ const addWord = (word) =>{ return { type: searchConstants.ADD_WORD, word } }
 
 const requestLinks = (request) =>{ return { type: searchConstants.GET_LINKS, request } }
 
+const saveResearch =(research) =>{ return { type: searchConstants.SAVE_RESEARCH, research} }
+
 export const searchActions = {
     getRandomWords,
     addWord, 
-    getSearchLinks
+    getSearchLinks,
+    postResearch
 }

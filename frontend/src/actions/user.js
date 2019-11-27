@@ -27,7 +27,7 @@ const login = (_email, _password) =>{
             email: _email,
             password: _password
           }).then(responseData =>{
-            localStorage.setItem('user',JSON.stringify(responseData.email));
+            localStorage.setItem('user',JSON.stringify(responseData.username));
             console.log(responseData);
             if(responseData.id == null){
                 dispatch(failure(responseData));
