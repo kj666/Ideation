@@ -20,13 +20,28 @@ const getRandomWords = () => {
     }
 }
 
+const getSearchLinks = (wordList) => {
+    return (dispatch) =>{
+        controller.sendHttpRequest('POST', constants.SEARCH_URL,{
+            query: wordList,
+            startIndex: "0"
+        }).then(responseData =>{
+            console.log(responseData);
+            dispatch(requestLinks(responseData));
+        });
+    }
+}
+
 const requestRandomWords = (words) =>{
     return {type: searchConstants.GET_RANDOM_WORD, words }
 }
 
 const addWord = (word) =>{ return { type: searchConstants.ADD_WORD, word } }
 
+const requestLinks = (request) =>{ return { type: searchConstants.GET_LINKS, request } }
+
 export const searchActions = {
     getRandomWords,
-    addWord
+    addWord, 
+    getSearchLinks
 }

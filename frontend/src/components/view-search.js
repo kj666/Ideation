@@ -8,26 +8,12 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 import { searchActions } from '../actions/search.js';
 
-// const linkTemplate = html`
-// 	<div class = container>
-// 		<div class="row">
-// 			<div class="col">
-// 				<i class="fas fa-arrow-alt-circle-left" style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px"></i>
-// 			</div>
-// 			<div class="col-8">
-// 				<iframe src="https://lit-element.polymer-project.org/guide/lifecycle" width="700" height="400"></iframe>
-// 			</div>
-// 			<div class="col">
-// 				<i class="fas fa-arrow-alt-circle-right" style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px "></i>
-//     		</div>
-// 	</div>
-//       `;
-
 class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
 			_words: { type: Array },
-
+			_haveLinks: false,
+			_link: {type : Array},
 			current: { type: Number },
 			task: { type: String },
 			savedLinks: { type: Array },
@@ -48,7 +34,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 			'https://en.wikipedia.org/wiki/Bill_Gates',
 			'https://en.wikipedia.org/wiki/Elon_Musk'
 		];
-		this.link = this.linksArray[this.current];
+		// this.link = this.linksArray[this.current];
+		// this.link = this._link[this.current].link;
 	}
 
 	static get styles() {
@@ -96,47 +83,42 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
             <div class="row justify-content-center" style="padding-top: 50px;">
 					<div class="col-6 text-center">
-						<button class="btn btn-secondary btn-block bg-dark" type="submit">Search</button>
+						<button class="btn btn-secondary btn-block bg-dark" @click="${this.onSearch}">Search</button>
 					</div>
-				</div>
+			</div>
 
-                <div class="row justify-content-center" style="padding-top: 50px">
-					<div class="col-6 text-center">
-						<h3>Search Result</h3>
-					</div>
-					<div class="col-2 text-center" style="padding-right: 110px">
-					<i class="fas fa-heart" @click=${() =>
-						this._saveFavorites(this.link)} style="font-size: 50px; float: right; padding-right:50px;"></i>
-					</div>
-                	<div class = 'col-4 text-center'>
-						<button class="btn btn-secondary btn-large bg-dark" type="submit" @click=${this
-							.saveMyResearch}>Save My Research</button>
-                	</div>
+			${this._haveLinks ? html`<div>	
+			<div class="row justify-content-center" style="padding-top: 50px;">
+				<div class="col-6 text-center">
+					<h3>Search Result</h3>
 				</div>
+			</div>
 			
-				<div class = container style="padding-bottom: 50px;">
-		            <div class="row">
-			            <div class="col">
-				            <i class="fas fa-thumbs-down" @click=${() =>
-								this._removeLink(
+			<div class = container style="padding-bottom: 50px;">
+				<div class="row">
+					<div class="col">
+						<i class="fas fa-thumbs-down" @click=${() =>
+							this._removeLink(
+								this.link
+							)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px; background:green"></i> 
+					</div>
+
+					<div class="col-9">
+						<iframe src="${this.link}" width="800" height="700"></iframe>
+					</div>
+
+					<div class="col" >
+						<i class="fas fa-thumbs-up" @click=${this
+							._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
+							<i class="fas fa-heart" @click=${() =>
+								this._saveFavorites(
 									this.link
-								)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px; background:green"></i> 
-			            </div>
+								)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i>
+					</div>
+				</div> 
+			</div>
+		</div>`:``}
 
-			            <div class="col-9">
-				            <iframe src="${this.link}" width="800" height="700"></iframe>
-			            </div>
-
-			            <div class="col" >
-				            <i class="fas fa-thumbs-up" @click=${this
-								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
-                                <!-- <i class="fas fa-heart" @click=${() =>
-									this._saveFavorites(
-										this.link
-									)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i> -->
-                        </div>
-    		        </div> 
-                </div>
         </div>	
     `;
 	}
@@ -155,13 +137,13 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 	stateChanged(state) {
 		this._words = state.search.words;
-		console.log('test');
+		console.log("test");
 		console.log(state.search.words);
 	}
 	_nextLink() {
 		console.log('next clicked');
-
-		this.link = this.linksArray[this.current];
+		this.link = this._link[this.current].link;
+		// this.link = this.linksArray[this.current];
 		this.savedLinks.push(this.link);
 		console.log(this.savedLinks.length);
 
@@ -171,7 +153,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 			this.current++;
 		}
 
-		this.link = this.linksArray[this.current];
+		this.link = this._link[this.current].link;
+		// this.link = this.linksArray[this.current];
 	}
 
 	_removeLink(link) {
@@ -184,7 +167,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 			this.current++;
 		}
 
-		this.link = this.linksArray[this.current];
+		this.link = this._link[this.current].link;
+		// this.link = this.linksArray[this.current];
 	}
 
 	_saveFavorites(link) {
@@ -211,6 +195,13 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
 	onSearch() {
 		console.log(this._words);
+		var concatword = '';
+		// todo change length of for loop
+		for(var i = 0; i < 1; i++){
+			concatword += this._words[i].word + ' ';
+		}
+		console.log(concatword);
+		store.dispatch(searchActions.getSearchLinks(concatword.toString()));
 	}
 }
 

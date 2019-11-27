@@ -2,7 +2,8 @@ import { searchConstants } from '../actions/search.js';
 
 const INITIAL_STATE = {
     words: [],
-    links: []
+    links: [],
+    haveLinks: false
 };
 
 const search = (state = INITIAL_STATE, action) =>{
@@ -21,7 +22,8 @@ const search = (state = INITIAL_STATE, action) =>{
         case searchConstants.GET_LINKS:
                 return{
                     ...state,
-                   links: action.links
+                   links: action.links,
+                   haveLinks: true
                 };            
         default:
             return {

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using IdeaAPI.Models;
 using IdeaAPI.Services;
@@ -20,6 +21,8 @@ namespace IdeaAPI.Controllers
     public class IdeaController : ControllerBase
     {
         private readonly IdeaService _ideaService;
+
+        private const string searchURL = "http://3.87.182.8:50000/search-keywords";
 
         public IdeaController(IdeaService ideaServie)
         {
@@ -47,14 +50,40 @@ namespace IdeaAPI.Controllers
 
         #endregion Research
 
-        [EnableCors("AllowOrigin")]
         [HttpGet("words/random")]
         public async Task<List<Word>> CallWordAPI()
         {
             using (var client = new HttpClient())
             {
-                var content = await client.GetStringAsync("https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=10&api_key=hcjtmdkyfyp7wb7znn47m2o6ezs8d1e82hvf7xkv87hf7bb4h");
+                var content = await client.GetStringAsync("https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=6&api_key=hcjtmdkyfyp7wb7znn47m2o6ezs8d1e82hvf7xkv87hf7bb4h");
                 return JsonConvert.DeserializeObject<List<Word>>(content);
+            }
+        }
+
+        [HttpPost("search-keywords")]
+        public async Task<SearchResult> CallSearchAPI(SearchRequest searchQuery)
+        {
+
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(searchURL),
+                    Content = new StringContent(JsonConvert.SerializeObject(searchQuery))
+                };
+
+                var response = await client.SendAsync(request).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                return JsonConvert.DeserializeObject<SearchResult>(responseBody);
+                //var json = JsonConvert.SerializeObject(request);
+                //var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
+
+                //var content = await client.GetStringAsync(searchURL, stringContent);
+                //return JsonConvert.DeserializeObject<SearchResult>(content);
             }
         }
 
