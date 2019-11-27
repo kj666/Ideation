@@ -69,7 +69,7 @@ class ViewResearch extends connect(store)(PageViewElement) {
     
 
     <section>
-          <h2>Research 1</h2>
+          <h2>Saved Research</h2>
     </section>
 
     <div class="container">
