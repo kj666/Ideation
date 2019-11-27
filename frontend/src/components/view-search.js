@@ -27,7 +27,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
 			_words: { type: Array },
-			
+
 			current: { type: Number },
 			task: { type: String },
 			savedLinks: { type: Array },
@@ -52,11 +52,14 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 
 	static get styles() {
-		return [ SharedStyles, css`
-		.tag-space{
-			margin: 10px;
-		}` ];
-
+		return [
+			SharedStyles,
+			css`
+				.tag-space {
+					margin: 10px;
+				}
+			`
+		];
 	}
 
 	render() {
@@ -97,10 +100,18 @@ class ViewSearch extends connect(store)(PageViewElement) {
 					</div>
 				</div>
 
-                <div class="row justify-content-center" style="padding-top: 50px;">
+                <div class="row justify-content-center" style="padding-top: 50px">
 					<div class="col-6 text-center">
 						<h3>Search Result</h3>
 					</div>
+					<div class="col-2 text-center" style="padding-right: 110px">
+					<i class="fas fa-heart" @click=${() =>
+						this._saveFavorites(this.link)} style="font-size: 50px; float: right; padding-right:50px;"></i>
+					</div>
+                	<div class = 'col-4 text-center'>
+						<button class="btn btn-secondary btn-large bg-dark" type="submit" @click=${this
+							.saveMyResearch}>Save My Research</button>
+                	</div>
 				</div>
 			
 				<div class = container style="padding-bottom: 50px;">
@@ -119,15 +130,23 @@ class ViewSearch extends connect(store)(PageViewElement) {
 			            <div class="col" >
 				            <i class="fas fa-thumbs-up" @click=${this
 								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
-                                <i class="fas fa-heart" @click=${() =>
+                                <!-- <i class="fas fa-heart" @click=${() =>
 									this._saveFavorites(
 										this.link
-									)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i>
+									)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i> -->
                         </div>
     		        </div> 
                 </div>
         </div>	
     `;
+	}
+
+	saveMyResearch() {
+		console.log('save my research clicked');
+		let researchName = prompt('Give this research a Name', 'Research 1');
+		if (researchName != null) {
+			console.log(researchName);
+		}
 	}
 
 	firstUpdated() {
@@ -136,7 +155,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 	stateChanged(state) {
 		this._words = state.search.words;
-		console.log("test");
+		console.log('test');
 		console.log(state.search.words);
 	}
 	_nextLink() {
@@ -185,8 +204,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		e.target.value = '';
 	}
 
-	addWord(){
-		var newWord = {id: 0, word: this.task};
+	addWord() {
+		var newWord = { id: 0, word: this.task };
 		store.dispatch(searchActions.addWord(newWord));
 	}
 
