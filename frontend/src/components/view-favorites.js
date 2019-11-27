@@ -43,9 +43,19 @@ class ViewFavorites extends connect(store)(PageViewElement) {
 	constructor() {
 		super();
 		this.research = [
-			'https://en.wikipedia.org/wiki/Steve_Jobs',
-			'https://en.wikipedia.org/wiki/Bill_Gates',
-			'https://en.wikipedia.org/wiki/Elon_Musk'
+			{
+				link:
+					'https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae',
+				title: 'Descriptions of the larva and pupa of the short palped crane fly ...',
+				snippet:
+					'Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ...'
+			},
+			{
+				link: 'http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf',
+				title: 'Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...',
+				snippet:
+					'continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ...'
+			}
 		];
 	}
 
@@ -68,9 +78,10 @@ class ViewFavorites extends connect(store)(PageViewElement) {
             <div class="card" >
               <ul class="list-group list-group-flush">
               ${this.research.map(
-					(i) => html`
-                  <li class="list-group-item" style="font-size:30px;">
-                      <a href="${i}">${i}</a>
+					(item) => html`
+                  <li class="list-group-item" style="font-size:20px;">
+                      <a href="${item.link}">${item.title}</a>
+                      <p>${item.snippet}</p>
                   </li>`
 				)}               
               </ul>
