@@ -148,6 +148,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		if (researchName != null) {
 			console.log(researchName);
 		}
+		// store.dispatch(searchActions.)
 	}
 
 	firstUpdated() {
