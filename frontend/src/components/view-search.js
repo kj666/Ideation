@@ -13,7 +13,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		return {
 			_words: { type: Array },
 			_haveLinks: true,
-			_user:{},
+			_user: {},
 			current: { type: Number },
 			task: { type: String },
 			savedLinks: { type: Array },
@@ -29,19 +29,24 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this.savedLinks = [];
 		this.saveFavorites = [];
 		this.current = 0;
-		this.linksArray ={"links": [
-			{
-				"link": "https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae",
-				"title": "Descriptions of the larva and pupa of the short palped crane fly ...",
-				"snippet": "Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ..."
-			},
-			{
-				"link": "http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf",
-				"title": "Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...",
-				"snippet": "continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ..."
-			}],
-			"startIndex":0
-	};
+		this.linksArray = {
+			links: [
+				{
+					link:
+						'https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae',
+					title: 'Descriptions of the larva and pupa of the short palped crane fly ...',
+					snippet:
+						'Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ...'
+				},
+				{
+					link: 'http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf',
+					title: 'Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...',
+					snippet:
+						'continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ...'
+				}
+			],
+			startIndex: 0
+		};
 		// this.linksArray = [
 		// 	'https://en.wikipedia.org/wiki/Steve_Jobs',
 		// 	'https://en.wikipedia.org/wiki/Bill_Gates',
@@ -72,7 +77,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     
     
-	<div class="container" style="padding-top: 50px;">
+	<div class="container" style="padding-top: 50px; ">
             <div class="container" style="padding-top: 50px;">
 				<div class="row justify-content-center">
 					<div class="col-6">
@@ -99,38 +104,35 @@ class ViewSearch extends connect(store)(PageViewElement) {
 						<button class="btn btn-secondary btn-block bg-dark" @click=${this.onSearch}>Search</button>
 					</div>
 				</div>
-	${this._haveLinks ? html`
+	${this._haveLinks
+		? html`
 			<div>	
-                <div class="row justify-content-center" style="padding-top: 50px">
-					<div class="col-6 text-center">
-						<h3>Search Result</h3>
-					</div>
-					<div class="col-2 text-center" style="padding-right: 110px">
+                <div class="row justify-content-center" style="padding-top: 50px;">
+					<div class="col-sm-2 text-center">
 					<i class="fas fa-heart" @click=${() =>
 						this._saveFavorites(this.link)} style="font-size: 50px; float: right; padding-right:50px;"></i>
 					</div>
-                	<div class = 'col-4 text-center'>
+                	<div class = 'col-sm-4 text-center'>
 						<button class="btn btn-secondary btn-large bg-dark" type="submit" @click=${this
 							.saveMyResearch}>Save My Research</button>
                 	</div>
 				</div>
 			
 				<div class = container style="padding-bottom: 50px;">
-		            <div class="row">
-			            <div class="col">
+		            <div class="row align-items-center">
+			            <div class="col-sm-1">
 				            <i class="fas fa-thumbs-down" @click=${() =>
-								this._removeLink(
-									this.link
-								)} style="font-size: 50px; float: left; padding-top: 200px; padding-left: 50px; background:green"></i> 
+								this._removeLink(this.link)} style="font-size: 50px; float: left;"></i> 
 			            </div>
 
-			            <div class="col-9">
-				            <iframe src="${this.link}" width="800" height="700"></iframe>
+			            <div class="col-sm-10">
+							<div class="embed-responsive embed-responsive-4by3">
+				            	<iframe src="${this.link}"></iframe>
+							</div>
 			            </div>
 
-			            <div class="col" >
-				            <i class="fas fa-thumbs-up" @click=${this
-								._nextLink} style="font-size: 50px; float: right; padding-top: 200px; padding-right:50px; padding-bottom: 20px; background:pink "></i>
+			            <div class="col-sm-1">
+				            <i class="fas fa-thumbs-up" @click=${this._nextLink} style="font-size: 50px; float: right;"></i>
                                 <!-- <i class="fas fa-heart" @click=${() =>
 									this._saveFavorites(
 										this.link
@@ -138,9 +140,10 @@ class ViewSearch extends connect(store)(PageViewElement) {
                         </div>
     		        </div> 
 				</div>
-			</div>`:''}
+			</div>`
+		: ''}
         </div>	
-    `
+    `;
 	}
 
 	saveMyResearch() {
@@ -148,31 +151,29 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		let researchName = prompt('Give this research a Name', 'Research 1');
 		if (researchName != null) {
 			console.log(researchName);
-			console.log(this._user.username)
-			store.dispatch(searchActions.postResearch(this._user.username,
-				{
+			console.log(this._user.username);
+			store.dispatch(
+				searchActions.postResearch(this._user.username, {
 					research_name: researchName,
-						keywords: [
-							"Google",
-							"Amazon",
-							"test"
-						],
-						results: [
+					keywords: [ 'Google', 'Amazon', 'test' ],
+					results: [
 						{
-							link: "https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae",
-							title: "Descriptions of the larva and pupa of the short palped crane fly ...",
-							snippet: "Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ..."
+							link:
+								'https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae',
+							title: 'Descriptions of the larva and pupa of the short palped crane fly ...',
+							snippet:
+								'Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ...'
 						},
 						{
-							link: "http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf",
-							title: "Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...",
-							snippet: "continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ..."
-						}]
-				}
-			));
+							link: 'http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf',
+							title: 'Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...',
+							snippet:
+								'continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ...'
+						}
+					]
+				})
+			);
 		}
-
-		
 	}
 
 	firstUpdated() {
@@ -185,8 +186,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this._haveLinks = state.search.haveLinks;
 		this._user = state.user.user;
 		console.log(state.search.links);
-		console.log("test");
-		
+		console.log('test');
 	}
 	_nextLink() {
 		console.log('next clicked');
@@ -245,7 +245,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		console.log(this._words);
 		var concatword = '';
 		// todo change length of for loop
-		for(var i = 0; i < 1; i++){
+		for (var i = 0; i < 1; i++) {
 			concatword += this._words[i].word + ' ';
 		}
 		console.log(concatword);
