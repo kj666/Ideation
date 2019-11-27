@@ -33,10 +33,7 @@ import { SharedStyles } from './shared-styles.js';
 class ViewResearches extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
-			// // This is the data from the store.
-			// _clicks: { type: Number },
-			// _value: { type: Number }
-
+			words: { type: Array },
 			research: { type: Array },
 			researchName: { type: String },
 			saveResearch: { type: Array }
@@ -49,6 +46,7 @@ class ViewResearches extends connect(store)(PageViewElement) {
 
 	constructor() {
 		super();
+		this.words = [ 'apple, mango, orange', 'black,white' ];
 		this.research = [
 			'https://en.wikipedia.org/wiki/Steve_Jobs',
 			'https://en.wikipedia.org/wiki/Bill_Gates',
@@ -90,46 +88,31 @@ class ViewResearches extends connect(store)(PageViewElement) {
           <div class = "col-10 text-center">
             <div class="card" >
               <ul class="list-group list-group-flush">
-              ${this.research.map(
-					(i) => html`
-                  <li class="list-group-item" style="font-size:30px;">
-                      <a href="${i}">${i}</a>
+
+              ${this.words.map(
+					(currentElement, index) => html`                 
+                  <li class="list-group-item">
+                  <h6>Research ${index + 1}</h6>
+                      <!-- <div>${currentElement}</div> -->
+                      <div class=" row d-flex justify-content-center">
+                      <a class="badge badge-dark tag-space" style="color: #fff;">${currentElement}</a>
+                      </div>
                   </li>`
 				)}               
+
+              
+              <!-- ${this.research.map(
+					(currentElement, index) => html`
+                  <h4>Research ${index + 1}</h4>
+                  <li class="list-group-item">
+                      <a href="${currentElement}">${currentElement}</a>
+                  </li>`
+				)}                -->
               </ul>
             </div>
           </div>
         </div>
       </div>
-
-
-
-      <!-- <section>
-        <h2>My Researches</h2>
-        <p>This is a text-only page.</p>
-        <p>It doesn't do anything other than display some static text.</p>
-      </section> -->
-      <!-- <section>
-        <h2>Redux example: simple counter</h2>
-        <div class="circle">${this._value}</div>
-        <p>This page contains a reusable <code>&lt;counter-element&gt;</code>. The
-        element is not built in a Redux-y way (you can think of it as being a
-        third-party element you got from someone else), but this page is connected to the
-        Redux store. When the element updates its counter, this page updates the values
-        in the Redux store, and you can see the current value of the counter reflected in
-        the bubble above.</p>
-        <br><br>
-      </section> -->
-      <!-- <section>
-        <p>
-          <counter-element
-              value="${this._value}"
-              clicks="${this._clicks}"
-              @counter-incremented="${this._counterIncremented}"
-              @counter-decremented="${this._counterDecremented}">
-          </counter-element>
-        </p>
-      </section> -->
     `;
 	}
 
@@ -138,11 +121,6 @@ class ViewResearches extends connect(store)(PageViewElement) {
 			this.addResearch();
 		}
 	}
-
-	// clickHandler(e) {
-	// 	console.log('save clicked');
-	// 	this.addResearch();
-	// }
 
 	addResearch() {
 		//console.log('add called');
@@ -153,20 +131,6 @@ class ViewResearches extends connect(store)(PageViewElement) {
 		this.saveResearch.push({ key, value });
 		//console.log(this.saveResearch);
 	}
-
-	// _counterIncremented() {
-	//   store.dispatch(increment());
-	// }
-
-	// _counterDecremented() {
-	//   store.dispatch(decrement());
-	// }
-
-	// // This is called every time something is updated in the store.
-	// stateChanged(state) {
-	//   this._clicks = state.counter.clicks;
-	//   this._value = state.counter.value;
-	// }
 }
 
 window.customElements.define('view-researches', ViewResearches);
