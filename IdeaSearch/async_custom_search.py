@@ -2,10 +2,10 @@
 Command-line application that does a search.
 """
 
-import pprint
 import asyncio
-import aiohttp
+import pprint
 
+import aiohttp
 
 SEARCH_ID = '000966773646607521961:v3kbrwiec88'
 DEV_KEY = "AIzaSyCwtSyr1En5OSmRT4US2u15QrS0L6B58-k"
@@ -25,14 +25,24 @@ class AsyncCustomSearch:
 
     async def get_processed_results(self):
         raw_results = await self.get_raw_results()
-        return {'links': [{'link': item['link'],
-                           'title': item['title'],
-                           'snippet': item['snippet']} for item in raw_results['items']],
-                'nextPage': raw_results['queries']['nextPage'][0]['startIndex']}
+        links = []
+        next_page = 0
+        # TODO: Handle corrected queries
+        try:
+            if 'items' in raw_results:
+                links = [{'link': item['link'],
+                          'title': item['title'],
+                          'snippet': item['snippet']} for item in raw_results['items']]
+            if 'nextPage' in raw_results['queries']:
+                next_page = raw_results['queries']['nextPage'][0]['startIndex']
+        except KeyError:
+            pass
+        return {'links': links,
+                'nextPage': next_page}
 
 
 async def main():
-    newquery = AsyncCustomSearch("ideation research")
+    newquery = AsyncCustomSearch("godliness+brickkiln+badged+shell+decocted+monumentalize+", 0)
     results = await newquery.get_processed_results()
     pretty = pprint.PrettyPrinter()
     pretty.pprint(results)
