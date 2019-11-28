@@ -13,14 +13,19 @@ const LOGIN_USER_URL = `${API_URL}/user/login`;
 
 const SEARCH_URL = `${API_URL}/search-keywords`;
 
+<<<<<<< HEAD
 const SEARCH_API_URL = 'http://18.232.154.73:50000/search-keywords';
 const CRAWL_API_URL = 'http://18.232.154.73:50000/scrape-link';
 const RESULT_URL = `${SEARCH_API_URL}/search-keywords`;
+=======
+// const SEARCH_API_URL = 'http://3.87.182.8:50000';
+// const RESULT_URL = `${SEARCH_API_URL}/search-keywords`;
+>>>>>>> 706c93d3e01418f186e01fe2bc02498699a9b5e5
 
-const RANDOM_URL = `${API_URL}/words/random`;
+// const RANDOM_URL = `${API_URL}/words/random`;
 // const RANDOM_URL = `https://87938f90-8e2c-4c73-a8c8-b6ca7478ad85.mock.pstmn.io/workAPI`;
 // const RANDOM_URL = 'https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&limit=6&api_key=hcjtmdkyfyp7wb7znn47m2o6ezs8d1e82hvf7xkv87hf7bb4h';
-
+const RANDOM_URL = 'https://api.wordnik.com/v4/words.json/randomWords?hasDictionaryDef=true&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=3&maxLength=10&limit=5&api_key=hcjtmdkyfyp7wb7znn47m2o6ezs8d1e82hvf7xkv87hf7bb4h';
 const constants ={
     RANDOM_URL,
     RESEARCH_URL,
@@ -29,8 +34,8 @@ const constants ={
     POST_USER_URL,
     LOGIN_USER_URL,
     API_URL,
-    SEARCH_API_URL,
+    // SEARCH_API_URL,
     SEARCH_URL,
-    RESULT_URL
+    // RESULT_URL
 }
 export default constants;

@@ -63,9 +63,6 @@ const getRandomWords = () => {
     });
   };
 
-
-
-
 export const controller ={
     sendHttpRequest,
     getResearch,
