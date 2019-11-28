@@ -61,6 +61,7 @@ class ViewFavorites extends connect(store)(PageViewElement) {
 	}
 	stateChanged(state){
 		this._favorites = state.search.favoriteLinks;
+		console.log(state.search.favoriteLinks);
 	}
 }
 

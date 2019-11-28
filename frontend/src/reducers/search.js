@@ -42,7 +42,8 @@ const INITIAL_STATE = {
             "snippet": "Example Description"
         },
         "timestamp": "2019-11-27T05:53:33.368Z"
-    }],
+    }
+],
     likedLinks: [{"link": "https://example.com",
     "title": "Example title",
     "snippet": "Example Description"},

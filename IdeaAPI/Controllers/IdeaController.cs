@@ -99,7 +99,6 @@ namespace IdeaAPI.Controllers
         [HttpPost("search-keywords")]
         public async Task<SearchResult> CallSearchAPI(SearchRequest searchQuery)
         {
-
             using (var client = new HttpClient())
             {
                 var request = new HttpRequestMessage

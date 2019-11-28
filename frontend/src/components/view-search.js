@@ -114,7 +114,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
 			            <div class="col-sm-10">
 						<div>
-							<a href="${this.linksArray[this.current].link}">${this.linksArray[this.current].title}</a>
+							<a href="${this.link}">${this.linksArray[this.current].title}</a>
                       		<p>${this.linksArray[this.current].snippet}</p>
 							</div>
 							<div class="embed-responsive embed-responsive-4by3">
