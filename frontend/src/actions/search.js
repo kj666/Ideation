@@ -7,8 +7,8 @@ export const searchConstants = {
     ADD_WORD: 'ADD_WORD',
     REMOVE_WORD: 'REMOVE_WORD',
     GET_LINKS: 'GET_LINKS',
+    NO_LINKS: 'NO_LINKS',
     SAVE_RESEARCH: 'SAVE_RESEARCH',
-
     FAVORITE_LINK: 'FAVORITE_LINK',
     RESEARCH_LINK: 'RESEARCH_LINK',
     RESET_RESEARCH: 'RESET_RESEARCH'
@@ -24,11 +24,11 @@ const getRandomWords = () => {
     }
 }
 
-const getSearchLinks = (wordList) => {
+const getSearchLinks = (wordList, index) => {
     return (dispatch) =>{
         controller.sendHttpRequest('POST', constants.SEARCH_URL,{
             query: wordList,
-            startIndex: "0"
+            startIndex: index
         }).then(responseData =>{
             console.log(responseData);
             dispatch(requestLinks(responseData));
@@ -46,6 +46,14 @@ const postResearch =(_username,_research) =>{
             console.log(err, err.data);
           });
     }
+}
+const postFavorite =(_username,_favorite) =>{
+    controller.sendHttpRequest('POST', constants.FAVORITE_USER_URL+"/"+_username, _favorite)
+    .then(responseData =>{
+        console.log(responseData);
+        }).catch(err => {
+        console.log(err, err.data);
+        });
 }
 
 const getAllFavorites = (_username) =>{
@@ -72,7 +80,7 @@ const requestRandomWords = (words) =>{ return {type: searchConstants.GET_RANDOM_
 
 const addWord = (word) =>{ return { type: searchConstants.ADD_WORD, word } }
 
-const requestLinks = (request) =>{ return { type: searchConstants.GET_LINKS, request } }
+const requestLinks = (searchLinks) =>{ return { type: searchConstants.GET_LINKS, searchLinks } }
 
 const saveResearch =(research) =>{ return { type: searchConstants.SAVE_RESEARCH, research} }
 
@@ -85,6 +93,7 @@ export const searchActions = {
     addWord, 
     getSearchLinks,
     postResearch,
+    postFavorite,
     getAllFavorites,
     getAllResearches
 }

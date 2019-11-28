@@ -12,14 +12,17 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
 			_words: { type: Array },
-			_haveLinks: true,
+			_haveLinks: false,
+			_nextIndex:{ type: Number},
 			_user: {},
+			linksArray: { type: Array },
+			size:{ type: Number},
+
 			current: { type: Number },
 			task: { type: String },
 			savedLinks: { type: Array },
 			saveFavorites: { type: Array },
 			link: { type: String },
-			linksArray: { type: Array }
 		};
 	}
 
@@ -27,33 +30,16 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		super();
 		this.task = '';
 		this.savedLinks = [];
-		this.saveFavorites = [];
 		this.current = 0;
-		this.linksArray = {
-			links: [
+		this.size = 3;
+		this.linksArray = [
 				{
-					link:
-						'https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae',
-					title: 'Descriptions of the larva and pupa of the short palped crane fly ...',
-					snippet:
+					"link": "https://en.wikipedia.org/wiki/Elon_Musk",
+					"title": 'Descriptions of the larva and pupa of the short palped crane fly ...',
+					"snippet":
 						'Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ...'
-				},
-				{
-					link: 'http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf',
-					title: 'Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...',
-					snippet:
-						'continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ...'
-				}
-			],
-			startIndex: 0
-		};
-		// this.linksArray = [
-		// 	'https://en.wikipedia.org/wiki/Steve_Jobs',
-		// 	'https://en.wikipedia.org/wiki/Bill_Gates',
-		// 	'https://en.wikipedia.org/wiki/Elon_Musk'
-		// ];
-		// this.link = this.linksArray[this.current].value;
-		// this.link = this._link[this.current].link;
+				}];
+		this.link = this.linksArray[this.current].link;
 	}
 
 	static get styles() {
@@ -61,7 +47,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 			SharedStyles,
 			css`
 				.tag-space {
-					margin: 10px;
+					margin: 8px;
+					font-size: 14px;
 				}
 			`
 		];
@@ -101,7 +88,7 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
             <div class="row justify-content-center" style="padding-top: 50px;">
 					<div class="col-6 text-center">
-						<button class="btn btn-secondary btn-block bg-dark" @click=${this.onSearch}>Search</button>
+						<button class="btn btn-secondary btn-block bg-dark" @click=${()=>this.onSearch(0,3)}>Search</button>
 					</div>
 				</div>
 	${this._haveLinks
@@ -113,8 +100,8 @@ class ViewSearch extends connect(store)(PageViewElement) {
 						this._saveFavorites(this.link)} style="font-size: 50px; float: right; padding-right:50px;"></i>
 					</div>
                 	<div class = 'col-sm-4 text-center'>
-						<button class="btn btn-secondary btn-large bg-dark" type="submit" @click=${this
-							.saveMyResearch}>Save My Research</button>
+						<button class="btn btn-secondary btn-large bg-dark" type="submit" 
+						@click=${this.saveMyResearch}>Save My Research</button>
                 	</div>
 				</div>
 			
@@ -126,6 +113,10 @@ class ViewSearch extends connect(store)(PageViewElement) {
 			            </div>
 
 			            <div class="col-sm-10">
+						<div>
+							<a href="${this.linksArray[this.current].link}">${this.linksArray[this.current].title}</a>
+                      		<p>${this.linksArray[this.current].snippet}</p>
+							</div>
 							<div class="embed-responsive embed-responsive-4by3">
 				            	<iframe src="${this.link}"></iframe>
 							</div>
@@ -133,10 +124,6 @@ class ViewSearch extends connect(store)(PageViewElement) {
 
 			            <div class="col-sm-1">
 				            <i class="fas fa-thumbs-up" @click=${this._nextLink} style="font-size: 50px; float: right;"></i>
-                                <!-- <i class="fas fa-heart" @click=${() =>
-									this._saveFavorites(
-										this.link
-									)} style="font-size: 50px; float: right; padding-right:50px;  background:yellow"></i> -->
                         </div>
     		        </div> 
 				</div>
@@ -147,30 +134,17 @@ class ViewSearch extends connect(store)(PageViewElement) {
 	}
 
 	saveMyResearch() {
-		console.log('save my research clicked');
+		var _keywords = [];
+			for(var i = 0; i < this._words.length; i++){
+				_keywords.push(this._words[i].word);
+			}
 		let researchName = prompt('Give this research a Name', 'Research 1');
 		if (researchName != null) {
-			console.log(researchName);
-			console.log(this._user.username);
 			store.dispatch(
 				searchActions.postResearch(this._user.username, {
 					research_name: researchName,
-					keywords: [ 'Google', 'Amazon', 'test' ],
-					results: [
-						{
-							link:
-								'https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae',
-							title: 'Descriptions of the larva and pupa of the short palped crane fly ...',
-							snippet:
-								'Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ...'
-						},
-						{
-							link: 'http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf',
-							title: 'Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...',
-							snippet:
-								'continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ...'
-						}
-					]
+					keywords: _keywords,
+					results: this.savedLinks
 				})
 			);
 		}
@@ -185,42 +159,53 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this.linksArray = state.search.links;
 		this._haveLinks = state.search.haveLinks;
 		this._user = state.user.user;
+		this._nextIndex = state.search.nextIndex;
+		console.log(this.linksArray);
+		console.log(state.search.links);
+		console.log(this._nextIndex);
 	}
+
 	_nextLink() {
-		console.log('next clicked');
-		this.link = this._link[this.current].link;
-		// this.link = this.linksArray[this.current];
-		this.savedLinks.push(this.link);
-		console.log(this.savedLinks.length);
-
-		if (this.current == this.linksArray.length - 1) {
-			this.current = 0;
-		} else {
-			this.current++;
+		if(this.linksArray.length == 0){
+			if(this.nextIndex == 0){
+				this.onSearch(0,this.size -1 );
+				console.log('no more index');
+			}
+			else{
+				this.onSearch(this.nextIndex, this.size);
+				console.log('no more');
+			}
 		}
+		else{
+		console.log('next clicked');
+		this.link = this.linksArray[this.current].link;
+		this.savedLinks.push(this.linksArray[this.current]);
+		console.log(this.savedLinks);
 
-		this.link = this._link[this.current].link;
-		// this.link = this.linksArray[this.current];
+		this.linksArray.shift();
+		console.log(this.linksArray);
+		}
 	}
 
 	_removeLink(link) {
-		console.log('previous clicked');
-		this.linksArray = this.linksArray.filter((e) => e !== link);
-		// this._nextLink();
-		if (this.current == this.linksArray.length - 1) {
-			this.current = 0;
-		} else {
-			this.current++;
+		if(this.linksArray.length == 0){
+			console.log('no more');
 		}
-
-		this.link = this._link[this.current].link;
-		// this.link = this.linksArray[this.current];
+		else{
+			console.log('previous clicked');
+			this.link = this.linksArray[this.current].link;
+			this.linksArray.shift();
+		}
 	}
 
-	_saveFavorites(link) {
-		console.log('favorite clicked');
-		this.saveFavorites.push(link);
-		// console.log(this.saveFavorites.length);
+	_removeWord(){
+
+	}
+
+	_saveFavorites() {
+		var fav ={"results": this.linksArray[this.current]};
+		console.log(fav);
+		store.dispatch(searchActions.postFavorite(JSON.parse(localStorage.getItem('user')), fav))
 	}
 
 	shortcutListener(e) {
@@ -239,15 +224,16 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		store.dispatch(searchActions.addWord(newWord));
 	}
 
-	onSearch() {
+	onSearch(page, size) {
 		console.log(this._words);
 		var concatword = '';
 		// todo change length of for loop
-		for (var i = 0; i < 1; i++) {
+		for (var i = 0; i < size; i++) {
 			concatword += this._words[i].word + ' ';
 		}
 		console.log(concatword);
-		store.dispatch(searchActions.getSearchLinks(concatword.toString()));
+		console.log(this._nextIndex);
+		store.dispatch(searchActions.getSearchLinks(concatword, (page).toString()));
 	}
 }
 
