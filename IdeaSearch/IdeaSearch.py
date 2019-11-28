@@ -22,7 +22,7 @@ def server_setup():
         text = "Hello, " + name
         return web.Response(text=text)
 
-    @routes.get('/search-keywords')
+    @routes.post('/search-keywords')
     async def get_search_results(request):
         try:
             params = await request.json()
@@ -33,7 +33,7 @@ def server_setup():
 
         return web.json_response(await query.get_processed_results())
 
-    @routes.get('/scrape-link')
+    @routes.post('/scrape-link')
     async def get_scraped_link(request):
         try:
             params = await request.json()
@@ -42,7 +42,7 @@ def server_setup():
             logging.error("Invalid JSON body received")
             raise web.HTTPBadRequest()
 
-        return await scraper.get_links()
+        return web.json_response(await scraper.get_links())
 
     a.add_routes(routes)
     return a
