@@ -10,6 +10,7 @@ namespace IdeaAPI.Services
     public class IdeaService
     {
         private readonly IMongoCollection<Research> _reaserches;
+        private readonly IMongoCollection<Favorite> _favorites;
         private readonly IMongoCollection<User> _users;
 
         public IdeaService(IIdeationDatabaseSettings settings)
@@ -19,6 +20,7 @@ namespace IdeaAPI.Services
 
             _reaserches = database.GetCollection<Research>("Research");
             _users = database.GetCollection<User>("Users");
+            _favorites = database.GetCollection<Favorite>("Favorites");
         }
 
 
@@ -58,6 +60,27 @@ namespace IdeaAPI.Services
 
         #endregion Research
 
+        #region Favorite
+        public Favorite CreateUserFavorite(Favorite favorite, string username)
+        {
+            var user = GetUser(username);
+            favorite.User_id = user.Id;
+            favorite.Timestamp = DateTime.Now;
+            _favorites.InsertOne(favorite);
+            return favorite;
+        }
+
+        public List<Favorite> GetFavoriteByUsername(string username)
+        {
+            var user = GetUser(username);
+
+            if (user != null)
+                return _favorites.Find(favorite => favorite.User_id == GetUser(username).Id).ToList();
+            else
+                return null;
+        }
+
+        #endregion Favorite
 
         #region User
 

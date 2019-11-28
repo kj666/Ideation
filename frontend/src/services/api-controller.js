@@ -23,8 +23,9 @@ const getRandomWords = () => {
     console.log(responseData);
   });
 };
-  const getResearch = () => {
-    sendHttpRequest('GET', constants.RESEARCH_URL).then(responseData => {
+  const getResearch = (username) => {
+    sendHttpRequest('GET', constants.RESEARCH_USER_URL+'/'+_username)
+    .then(responseData => {
       console.log(responseData);
     });
   };
@@ -47,7 +48,15 @@ const getRandomWords = () => {
       email: _email,
       password: _password
     }).then(responseData =>{
-      localStorage.setItem('user',responseData);
+      localStorage.setItem('userID',responseData.id);
+      console.log(responseData);
+    }).catch(err => {
+      console.log(err, err.data);
+    });
+  };
+
+  const postResearch =  (_research) =>{
+    sendHttpRequest('POST', constants.RESEARCH_USER_URL+'/'+_research.username, _research).then(responseData =>{
       console.log(responseData);
     }).catch(err => {
       console.log(err, err.data);
@@ -55,9 +64,12 @@ const getRandomWords = () => {
   };
 
 
+
+
 export const controller ={
     sendHttpRequest,
     getResearch,
     postUser,
-    loginUser
+    loginUser,
+    postResearch
 }

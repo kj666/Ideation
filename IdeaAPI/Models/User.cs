@@ -21,6 +21,5 @@ namespace IdeaAPI.Models
         public string Fullname { get; set; }
 
         public string Password { get; set; }
-
     }
 }
