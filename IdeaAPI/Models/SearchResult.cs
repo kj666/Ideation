@@ -25,4 +25,10 @@ namespace IdeaAPI.Models
         public string query { get; set; }
         public string startIndex { get; set; }
     }
+
+    public class ScrapeRequest
+    {
+        public string link { get; set; }
+        public string query { get; set; }
+    }
 }

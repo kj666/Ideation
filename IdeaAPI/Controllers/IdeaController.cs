@@ -22,11 +22,12 @@ namespace IdeaAPI.Controllers
     {
         private readonly IdeaService _ideaService;
 
-        private const string searchURL = "http://3.87.182.8:50000/search-keywords";
+        private const string searchURL = "http://18.232.154.73:50000/search-keywords";
+        private const string scrapeURL = "http://18.232.154.73:50000/scrape-link";
 
-        public IdeaController(IdeaService ideaServie)
+        public IdeaController(IdeaService ideaService)
         {
-            _ideaService = ideaServie;
+            _ideaService = ideaService;
         }
 
         #region Research
@@ -106,6 +107,28 @@ namespace IdeaAPI.Controllers
                     Method = HttpMethod.Get,
                     RequestUri = new Uri(searchURL),
                     Content = new StringContent(JsonConvert.SerializeObject(searchQuery))
+                };
+
+                var response = await client.SendAsync(request).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                return JsonConvert.DeserializeObject<SearchResult>(responseBody);
+            }
+        }
+
+        [HttpPost("scrape-link")]
+        public async Task<SearchResult> CallSearchAPI(ScrapeRequest scrapeQuery)
+        {
+
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Get,
+                    RequestUri = new Uri(scrapeURL),
+                    Content = new StringContent(JsonConvert.SerializeObject(scrapeQuery))
                 };
 
                 var response = await client.SendAsync(request).ConfigureAwait(false);
