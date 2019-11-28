@@ -1,31 +1,10 @@
-/**
-@license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
 
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
-// This element is connected to the Redux store.
 import { store } from '../store.js';
-
-// These are the actions needed by this element.
-import { increment, decrement } from '../actions/counter.js';
-
-// We are lazy loading its reducer.
-import counter from '../reducers/counter.js';
-store.addReducers({
-	counter
-});
-
-// These are the elements needed by this element.
-import './counter-element.js';
+import { searchActions } from '../actions/search.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
@@ -33,7 +12,8 @@ import { SharedStyles } from './shared-styles.js';
 class ViewFavorites extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
-			research: { type: Array }
+			// research: {},
+			_user:{}
 		};
 	}
 
@@ -42,19 +22,27 @@ class ViewFavorites extends connect(store)(PageViewElement) {
 	}
 	constructor() {
 		super();
+		// // this.research =[];
 		this.research = [
 			{
-				link:
-					'https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae',
-				title: 'Descriptions of the larva and pupa of the short palped crane fly ...',
-				snippet:
-					'Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ...'
+				"id": "5dde0f5dcab1b4467e7e2071",
+				"user_id": "5dc8d921f8f2ff0c0b17bac3",
+				"results": {
+					"link": "https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae",
+					"title": "Descriptions of the larva and pupa of the short palped crane fly ...",
+					"snippet": "Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ..."
+				},
+				"timestamp": "2019-11-27T05:53:33.368Z"
 			},
 			{
-				link: 'http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf',
-				title: 'Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...',
-				snippet:
-					'continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ...'
+				"id": "5ddeb61f7c082f4874661ea3",
+				"user_id": "5dc8d921f8f2ff0c0b17bac3",
+				"results": {
+					"link": "http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf",
+					"title": "Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...",
+					"snippet": "continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ..."
+				},
+				"timestamp": "2019-11-27T17:45:03.578Z"
 			}
 		];
 	}
@@ -80,21 +68,30 @@ class ViewFavorites extends connect(store)(PageViewElement) {
               ${this.research.map(
 					(item) => html`
                   <li class="list-group-item" style="font-size:20px;">
-                      <a href="${item.link}">${item.title}</a>
-                      <p>${item.snippet}</p>
+                      <a href="${item.results.link}">${item.results.title}</a>
+                      <p>${item.results.snippet}</p>
                   </li>`
 				)}               
-              </ul>
+			  </ul>
+			  
             </div>
           </div>
         </div>
       </div>
-
-
-      
-      
     `;
 	}
+
+	// firstUpdated(){
+	// 	super.firstUpdated();
+	// 	store.dispatch(searchActions.getAllFavorites('kj666'));
+		
+	// }
+
+	// stateChanged(state){
+	// 	this._user = state.user.user;
+	// 	this.research = state.search.favoriteLink;
+	// 	console.log(this.research);
+	// }
 }
 
 window.customElements.define('view-favorites', ViewFavorites);
