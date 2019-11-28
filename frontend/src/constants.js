@@ -3,7 +3,7 @@ const DEFAULT_NETWORK_ERROR_MESSAGE = 'A network error has occurred';
 
 // const API_URL = 'http://localhost:5000/idea';
 // const API_URL = 'http://ec2-54-161-141-29.compute-1.amazonaws.com'
-const API_URL = 'http://54.161.141.29:1000/idea';
+const API_URL = 'http://54.161.141.29:55000/idea';
 const RESEARCH_URL = `${API_URL}/research`;
 const RESEARCH_USER_URL = `${API_URL}/research/user`;
 const FAVORITE_USER_URL = `${API_URL}/favorite/user`;
@@ -13,14 +13,9 @@ const LOGIN_USER_URL = `${API_URL}/user/login`;
 
 const SEARCH_URL = `${API_URL}/search-keywords`;
 
-<<<<<<< HEAD
-const SEARCH_API_URL = 'http://18.232.154.73:50000/search-keywords';
-const CRAWL_API_URL = 'http://18.232.154.73:50000/scrape-link';
+const SEARCH_API_URL = 'http://18.232.154.73:50000';
+const CRAWL_URL = `${SEARCH_API_URL}/scrape-link`;
 const RESULT_URL = `${SEARCH_API_URL}/search-keywords`;
-=======
-// const SEARCH_API_URL = 'http://3.87.182.8:50000';
-// const RESULT_URL = `${SEARCH_API_URL}/search-keywords`;
->>>>>>> 706c93d3e01418f186e01fe2bc02498699a9b5e5
 
 // const RANDOM_URL = `${API_URL}/words/random`;
 // const RANDOM_URL = `https://87938f90-8e2c-4c73-a8c8-b6ca7478ad85.mock.pstmn.io/workAPI`;
