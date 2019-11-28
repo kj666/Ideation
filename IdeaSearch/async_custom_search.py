@@ -27,7 +27,11 @@ class AsyncCustomSearch:
         raw_results = await self.get_raw_results()
         links = []
         next_page = 0
-        # TODO: Handle corrected queries
+
+        results = raw_results.get('searchInformation').get('totalResults')
+        if results is not None and int(results) <= 0 and 'spelling' in raw_results:
+            self.params['q'] = raw_results['spelling']['correctedQuery']
+            raw_results = await self.get_raw_results()
         try:
             if 'items' in raw_results:
                 links = [{'link': item['link'],
@@ -42,7 +46,7 @@ class AsyncCustomSearch:
 
 
 async def main():
-    newquery = AsyncCustomSearch("godliness+brickkiln+badged+shell+decocted+monumentalize+", 0)
+    newquery = AsyncCustomSearch("godliness+brickkiln+badged+shell+decocted+monumentalise+", 0)
     results = await newquery.get_processed_results()
     pretty = pprint.PrettyPrinter()
     pretty.pprint(results)

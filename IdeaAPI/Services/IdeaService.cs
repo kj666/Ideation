@@ -9,7 +9,7 @@ namespace IdeaAPI.Services
 {
     public class IdeaService
     {
-        private readonly IMongoCollection<Research> _reaserches;
+        private readonly IMongoCollection<Research> _researches;
         private readonly IMongoCollection<Favorite> _favorites;
         private readonly IMongoCollection<User> _users;
 
@@ -18,45 +18,45 @@ namespace IdeaAPI.Services
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _reaserches = database.GetCollection<Research>("Research");
+            _researches = database.GetCollection<Research>("Research");
             _users = database.GetCollection<User>("Users");
             _favorites = database.GetCollection<Favorite>("Favorites");
         }
 
 
         #region Research
-        public List<Research> GetAllResearches() => _reaserches.Find(research => true).ToList();
+        public List<Research> GetAllResearches() => _researches.Find(research => true).ToList();
 
         public List<Research> GetResearchByUsername(string username)
         {
             var user = GetUser(username);
 
             if (user != null)
-                return _reaserches.Find(research => research.User_id == GetUser(username).Id).ToList();
+                return _researches.Find(research => research.User_id == GetUser(username).Id).ToList();
             else
                 return null;
         }
 
-        public Research GetResearchByName(string researchName) => _reaserches.Find(research => research.Research_name == researchName).FirstOrDefault();
+        public Research GetResearchByName(string researchName) => _researches.Find(research => research.Research_name == researchName).FirstOrDefault();
 
         public Research CreateUserResearch(Research research, string username)
         {
             var user = GetUser(username);
             research.User_id = user.Id;
             research.Timestamp = DateTime.Now;
-            _reaserches.InsertOne(research);
+            _researches.InsertOne(research);
             return research;
         }
 
 
         public void Update(string id, Research researchIn) =>
-            _reaserches.ReplaceOne(research => research.Id == id, researchIn);
+            _researches.ReplaceOne(research => research.Id == id, researchIn);
 
         public void Remove(Research researchIn) =>
-            _reaserches.DeleteOne(research => research.Id == researchIn.Id);
+            _researches.DeleteOne(research => research.Id == researchIn.Id);
 
         public void Remove(string id) =>
-            _reaserches.DeleteOne(research => research.Id == id);
+            _researches.DeleteOne(research => research.Id == id);
 
         #endregion Research
 
