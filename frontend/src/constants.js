@@ -1,10 +1,12 @@
-// const API_URL = 'http://localhost:5000';
 
 const DEFAULT_NETWORK_ERROR_MESSAGE = 'A network error has occurred';
 
-const API_URL = 'http://localhost:5000/idea';
+// const API_URL = 'http://localhost:5000/idea';
+// const API_URL = 'http://ec2-54-161-141-29.compute-1.amazonaws.com'
+const API_URL = 'https://localhost:44315/idea';
 const RESEARCH_URL = `${API_URL}/research`;
 const RESEARCH_USER_URL = `${API_URL}/research/user`;
+const FAVORITE_USER_URL = `${API_URL}/favorite/user`;
 const POST_USER_URL = `${API_URL}/user`;
 const LOGIN_USER_URL = `${API_URL}/user/login`;
 
@@ -22,11 +24,12 @@ const constants ={
     RANDOM_URL,
     RESEARCH_URL,
     RESEARCH_USER_URL,
+    FAVORITE_USER_URL,
     POST_USER_URL,
     LOGIN_USER_URL,
     API_URL,
     SEARCH_API_URL,
     SEARCH_URL,
     RESULT_URL
-
+}
 export default constants;

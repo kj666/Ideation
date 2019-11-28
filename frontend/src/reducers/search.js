@@ -18,7 +18,7 @@ const INITIAL_STATE = {
     haveLinks: true,
     research: {},
     researchLinks: {},
-    favoriteLink: {}
+    favoriteLinks: {}
 };
 
 const search = (state = INITIAL_STATE, action) =>{
@@ -48,7 +48,7 @@ const search = (state = INITIAL_STATE, action) =>{
         case searchConstants.FAVORITE_LINK:
             return{
                 ...state,
-                research: action.research
+                favoriteLinks: action.favoriteLinks
             }; 
         case searchConstants.RESEARCH_LINK:
             return{
