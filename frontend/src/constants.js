@@ -3,7 +3,7 @@ const DEFAULT_NETWORK_ERROR_MESSAGE = 'A network error has occurred';
 
 // const API_URL = 'http://localhost:5000/idea';
 // const API_URL = 'http://ec2-54-161-141-29.compute-1.amazonaws.com'
-const API_URL = 'https://localhost:44315/idea';
+const API_URL = 'http://54.161.141.29:1000/idea';
 const RESEARCH_URL = `${API_URL}/research`;
 const RESEARCH_USER_URL = `${API_URL}/research/user`;
 const FAVORITE_USER_URL = `${API_URL}/favorite/user`;
