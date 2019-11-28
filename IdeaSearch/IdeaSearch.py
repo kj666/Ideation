@@ -22,7 +22,7 @@ def server_setup():
         text = "Hello, " + name
         return web.Response(text=text)
 
-    @routes.post('/search-keywords')
+    @routes.get('/search-keywords')
     async def get_search_results(request):
         try:
             params = await request.json()
@@ -33,7 +33,7 @@ def server_setup():
 
         return web.json_response(await query.get_processed_results())
 
-    @routes.post('/scrape-link')
+    @routes.get('/scrape-link')
     async def get_scraped_link(request):
         try:
             params = await request.json()
