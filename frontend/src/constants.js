@@ -13,7 +13,8 @@ const LOGIN_USER_URL = `${API_URL}/user/login`;
 
 const SEARCH_URL = `${API_URL}/search-keywords`;
 
-const SEARCH_API_URL = 'http://3.87.182.8:50000';
+const SEARCH_API_URL = 'http://18.232.154.73:50000/search-keywords';
+const CRAWL_API_URL = 'http://18.232.154.73:50000/scrape-link';
 const RESULT_URL = `${SEARCH_API_URL}/search-keywords`;
 
 const RANDOM_URL = `${API_URL}/words/random`;
