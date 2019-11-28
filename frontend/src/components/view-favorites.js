@@ -12,8 +12,7 @@ import { SharedStyles } from './shared-styles.js';
 class ViewFavorites extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
-			// research: {},
-			_user:{}
+			_favorites: {type: Array}
 		};
 	}
 
@@ -22,29 +21,6 @@ class ViewFavorites extends connect(store)(PageViewElement) {
 	}
 	constructor() {
 		super();
-		// // this.research =[];
-		this.research = [
-			{
-				"id": "5dde0f5dcab1b4467e7e2071",
-				"user_id": "5dc8d921f8f2ff0c0b17bac3",
-				"results": {
-					"link": "https://www.researchgate.net/publication/225776573_Descriptions_of_the_larva_and_pupa_of_the_short_palped_crane_fly_Rhipidia_uniseriata_Schiner_1864_Diptera_Limoniidae",
-					"title": "Descriptions of the larva and pupa of the short palped crane fly ...",
-					"snippet": "Descriptions of the larva and pupa of the short palped crane fly Rhipidia ... living \nin saturated rotten wood, confined to fallen timber and coarse wooden debris in ..."
-				},
-				"timestamp": "2019-11-27T05:53:33.368Z"
-			},
-			{
-				"id": "5ddeb61f7c082f4874661ea3",
-				"user_id": "5dc8d921f8f2ff0c0b17bac3",
-				"results": {
-					"link": "http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf",
-					"title": "Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...",
-					"snippet": "continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ..."
-				},
-				"timestamp": "2019-11-27T17:45:03.578Z"
-			}
-		];
 	}
 
 	render() {
@@ -65,7 +41,7 @@ class ViewFavorites extends connect(store)(PageViewElement) {
           <div class = "col-10 text-center">
             <div class="card" >
               <ul class="list-group list-group-flush">
-              ${this.research.map(
+			  ${this._favorites.map(
 					(item) => html`
                   <li class="list-group-item" style="font-size:20px;">
                       <a href="${item.results.link}">${item.results.title}</a>
@@ -73,25 +49,19 @@ class ViewFavorites extends connect(store)(PageViewElement) {
                   </li>`
 				)}               
 			  </ul>
-			  
             </div>
           </div>
         </div>
       </div>
     `;
 	}
-
-	// firstUpdated(){
-	// 	super.firstUpdated();
-	// 	store.dispatch(searchActions.getAllFavorites('kj666'));
-		
-	// }
-
-	// stateChanged(state){
-	// 	this._user = state.user.user;
-	// 	this.research = state.search.favoriteLink;
-	// 	console.log(this.research);
-	// }
+	firstUpdated() {
+		super.firstUpdated();
+		store.dispatch(searchActions.getAllFavorites(JSON.parse(localStorage.getItem('user'))));
+	}
+	stateChanged(state){
+		this._favorites = state.search.favoriteLinks;
+	}
 }
 
 window.customElements.define('view-favorites', ViewFavorites);

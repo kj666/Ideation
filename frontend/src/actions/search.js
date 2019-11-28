@@ -53,7 +53,17 @@ const getAllFavorites = (_username) =>{
         controller.sendHttpRequest('GET', constants.FAVORITE_USER_URL+"/"+_username)
         .then(responseData =>{
             console.log(responseData);
-            dispatch(getFavorites(responseData));
+            dispatch(requestFavorites(responseData));
+        });
+    }
+}
+
+const getAllResearches = (_username) => {
+    return (dispatch) =>{
+        controller.sendHttpRequest('GET', constants.RESEARCH_USER_URL+"/"+_username)
+        .then(responseData =>{
+            console.log(responseData);
+            dispatch(requestResearches(responseData));
         });
     }
 }
@@ -66,12 +76,15 @@ const requestLinks = (request) =>{ return { type: searchConstants.GET_LINKS, req
 
 const saveResearch =(research) =>{ return { type: searchConstants.SAVE_RESEARCH, research} }
 
-const getFavorites = (favorites) => { return { type: searchConstants.FAVORITE_LINK, favorites} }
+const requestFavorites = (favorites) => { return { type: searchConstants.FAVORITE_LINK, favorites} }
+
+const requestResearches = (researches) => { return { type: searchConstants.RESEARCH_LINK, researches} }
 
 export const searchActions = {
     getRandomWords,
     addWord, 
     getSearchLinks,
     postResearch,
-    getAllFavorites
+    getAllFavorites,
+    getAllResearches
 }

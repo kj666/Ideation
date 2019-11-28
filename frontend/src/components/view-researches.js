@@ -1,31 +1,10 @@
-/**
-@license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-
-import { html } from 'lit-element';
+import { html, css } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
-
-// These are the actions needed by this element.
-import { increment, decrement } from '../actions/counter.js';
-
-// We are lazy loading its reducer.
-import counter from '../reducers/counter.js';
-store.addReducers({
-	counter
-});
-
-// These are the elements needed by this element.
-import './counter-element.js';
+import { searchActions } from '../actions/search.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
@@ -33,6 +12,7 @@ import { SharedStyles } from './shared-styles.js';
 class ViewResearches extends connect(store)(PageViewElement) {
 	static get properties() {
 		return {
+			_researches: {type: Array},
 			words: { type: Array },
 			research: { type: Array },
 			researchName: { type: String },
@@ -55,6 +35,17 @@ class ViewResearches extends connect(store)(PageViewElement) {
 		this.researchName = '';
 		this.saveResearch = [];
 	}
+	static get styles() {
+		return [
+			SharedStyles,
+			css`
+				.tag-space {
+					margin: 8px;
+					font-size: 14px;
+				}
+			`
+		];
+	}
 
 	render() {
 		return html`
@@ -65,12 +56,12 @@ class ViewResearches extends connect(store)(PageViewElement) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     
         <section>
-          <h2>My Research</h2>
+          <h2>My Researches</h2>
         </section>
 
       <div class = "container">
-        <div class= "row ">
-          <div class="col-8">
+        <div class= "row justify-content-center">
+          <div class="col-6">
             <div class="form-group">
               <div class="input-layout" @keyup="${this.shortcutListener}">
                     <input id='addToResearch' class="form-control" type="text" placeholder="Give your Research a name" aria-label="Search">
@@ -78,36 +69,30 @@ class ViewResearches extends connect(store)(PageViewElement) {
             </div>
           </div>
 
-          <div class="col-4 text-center">
+          <div class="col-2 text-center">
 						<button class="btn btn-secondary btn-block bg-dark" type="submit" @click=${this.addResearch}>Save</button>
 					</div>
         </div>
 
 
         <div class = "row justify-content-center" style="padding-top: 50px; padding-bottom: 50px">
-          <div class = "col-10 text-center">
+          <div class = "col-8 text-center">
             <div class="card" >
               <ul class="list-group list-group-flush">
 
-              ${this.words.map(
-					(currentElement, index) => html`                 
+              ${this._researches.map(
+					(item) => html`                 
                   <li class="list-group-item">
-                  <h6>Research ${index + 1}</h6>
-                      <!-- <div>${currentElement}</div> -->
+                  <h4>${item.research_name}</h4>
+                      <div>${item.timestamp}</div>
                       <div class=" row d-flex justify-content-center">
-                      <a class="badge badge-dark tag-space" style="color: #fff;">${currentElement}</a>
+					  ${item.keywords.map(
+						  (i) => html`<a class="badge badge-dark tag-space" style="color: #fff;">${i}</a>`
+					  )}
                       </div>
                   </li>`
 				)}               
 
-              
-              <!-- ${this.research.map(
-					(currentElement, index) => html`
-                  <h4>Research ${index + 1}</h4>
-                  <li class="list-group-item">
-                      <a href="${currentElement}">${currentElement}</a>
-                  </li>`
-				)}                -->
               </ul>
             </div>
           </div>
@@ -116,6 +101,14 @@ class ViewResearches extends connect(store)(PageViewElement) {
     `;
 	}
 
+	firstUpdated() {
+		super.firstUpdated();
+		store.dispatch(searchActions.getAllResearches(JSON.parse(localStorage.getItem('user'))));
+	}
+	stateChanged(state){
+		this._researches = state.search.researches;
+		console.log(state.search.researches);
+	}
 	shortcutListener(e) {
 		if (e.key === 'Enter') {
 			this.addResearch();

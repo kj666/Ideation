@@ -64,7 +64,7 @@ class ViewLogin extends connect(store)(PageViewElement) {
 
   stateChanged(state){
       this.loggedIn = state.user.loggedIn;
-      console.log(this.loggedIn + " "+state.user.loggedIn + " "+ JSON.stringify(state.user.user));
+      // console.log(this.loggedIn + " "+state.user.loggedIn + " "+ JSON.stringify(state.user.user));
   }
 }
 

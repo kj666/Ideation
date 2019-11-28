@@ -185,8 +185,6 @@ class ViewSearch extends connect(store)(PageViewElement) {
 		this.linksArray = state.search.links;
 		this._haveLinks = state.search.haveLinks;
 		this._user = state.user.user;
-		console.log(state.search.links);
-		console.log('test');
 	}
 	_nextLink() {
 		console.log('next clicked');

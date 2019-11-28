@@ -16,9 +16,39 @@ const INITIAL_STATE = {
         "startIndex":0
 },
     haveLinks: true,
-    research: {},
-    researchLinks: {},
-    favoriteLinks: {}
+    researches: [{
+        "id": "id",
+        "user_id": "userid",
+        "research_name": "Research Name",
+        "keywords": [
+            "word1",
+            "word2",
+            "word3"
+        ],
+        "results": [
+            {
+            "link": "https://example.com",
+            "title": "Example title",
+            "snippet": "Example Description"
+            },
+            {
+                "link": "http://nora.nerc.ac.uk/7499/1/Long-palpedCraneflies.pdf",
+                "title": "Provisional atlas of the long-palped craneflies (Diptera: Tipulinae) of ...",
+                "snippet": "continuity of large dead timber are now rare in the British countryside. The site \nwith the largest recorded number of species of Tipulidae is. Wisley Common in ..."
+            }
+        ],
+        "timestamp": "2019-11-27T04:44:42.364Z"
+    }],
+    favoriteLinks: [{
+        "id": "id",
+        "user_id": "userid",
+        "results": {
+            "link": "https://example.com",
+            "title": "Example title",
+            "snippet": "Example Description"
+        },
+        "timestamp": "2019-11-27T05:53:33.368Z"
+    }]
 };
 
 const search = (state = INITIAL_STATE, action) =>{
@@ -48,12 +78,12 @@ const search = (state = INITIAL_STATE, action) =>{
         case searchConstants.FAVORITE_LINK:
             return{
                 ...state,
-                favoriteLinks: action.favoriteLinks
+                favoriteLinks: action.favorites
             }; 
         case searchConstants.RESEARCH_LINK:
             return{
                 ...state,
-                research: action.research
+                researches: action.researches
             };    
         case searchConstants.RESET_RESEARCH:
         return{
