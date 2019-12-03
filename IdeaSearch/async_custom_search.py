@@ -8,7 +8,7 @@ import pprint
 import aiohttp
 
 SEARCH_ID = '000966773646607521961:v3kbrwiec88'
-DEV_KEY = "AIzaSyCwtSyr1En5OSmRT4US2u15QrS0L6B58-k"
+DEV_KEY = "-k"
 URL = "https://www.googleapis.com/customsearch/v1"
 
 
